@@ -1,18 +1,20 @@
+import { useTranslation } from 'react-i18next'
 import { useEnquiryForm } from '../../hooks/useEnquiryForm.js'
 import { Button } from '../common/Button.jsx'
 import { Input } from '../common/Input.jsx'
 
 export function EnquiryForm() {
+  const { t } = useTranslation('contact')
   const { values, errors, status, errorMessage, handleChange, handleSubmit } = useEnquiryForm()
 
   if (status === 'success') {
-    return <p className="text-sm text-green-600">Enquiry submitted successfully.</p>
+    return <p className="text-sm text-green-600">{t('enquirySubmitted')}</p>
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
       <Input
-        label="Parent Name"
+        label={t('parentName')}
         name="parentName"
         value={values.parentName}
         onChange={handleChange}
@@ -20,7 +22,7 @@ export function EnquiryForm() {
         required
       />
       <Input
-        label="Phone"
+        label={t('phone')}
         name="phone"
         value={values.phone}
         onChange={handleChange}
@@ -28,14 +30,14 @@ export function EnquiryForm() {
         required
       />
       <Input
-        label="Student Class"
+        label={t('studentClass')}
         name="studentClass"
         value={values.studentClass}
         onChange={handleChange}
         error={errors.studentClass}
       />
       <Input
-        label="Course"
+        label={t('course')}
         name="course"
         value={values.course}
         onChange={handleChange}
@@ -43,7 +45,7 @@ export function EnquiryForm() {
         required
       />
       <Input
-        label="Message"
+        label={t('message')}
         name="message"
         value={values.message}
         onChange={handleChange}

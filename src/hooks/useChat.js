@@ -1,11 +1,12 @@
 import { useState, useCallback } from 'react'
 import { askAssistant } from '../services/ai/aiService.js'
 import { FALLBACK_MESSAGE, SUGGESTED_QUESTIONS } from '../data/faqKnowledgeBase.js'
+import i18n from '../i18n/index.js'
 
 const WELCOME_MESSAGE = {
   id: 'welcome',
   role: 'assistant',
-  text: 'Hello! I am the SBS TUTORIALS admission assistant. How can I help you today?',
+  text: i18n.t('chatbot:welcome'),
 }
 
 export function useChat() {

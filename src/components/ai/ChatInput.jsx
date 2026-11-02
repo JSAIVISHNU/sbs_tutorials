@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button } from '../common/Button.jsx'
 
-export function ChatInput({ onSend, disabled }) {
+export function ChatInput({ onSend, disabled, placeholder = 'Type your question...' }) {
   const [value, setValue] = useState('')
 
   function handleSubmit(event) {
@@ -18,7 +18,7 @@ export function ChatInput({ onSend, disabled }) {
         type="text"
         value={value}
         onChange={(event) => setValue(event.target.value)}
-        placeholder="Type your question..."
+        placeholder={placeholder}
         className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
         disabled={disabled}
       />

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useChat } from '../../hooks/useChat.js'
 import { ChatMessage } from './ChatMessage.jsx'
 import { ChatInput } from './ChatInput.jsx'
@@ -5,6 +6,7 @@ import { ChatSuggestions } from './ChatSuggestions.jsx'
 import { isAiConfigured } from '../../services/ai/aiConfig.js'
 
 export function ChatWidget() {
+  const { t } = useTranslation('chatbot')
   const chat = useChat()
 
   if (!isAiConfigured()) {
@@ -14,14 +16,16 @@ export function ChatWidget() {
   return (
     <div className="fixed bottom-4 right-4 z-50">
       {chat.isOpen ? (
-        <div className="flex w-80 flex-col rounded-lg border border-gray-200 bg-white shadow-lg">
-          <div className="flex items-center justify-between border-b border-gray-200 px-4 py-2">
-            <span className="text-sm font-semibold text-gray-900">Admission Assistant</span>
+        <div className="flex w-80 flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg">
+          <div className="flex items-center justify-between border-b border-[var(--color-border)] px-4 py-2">
+            <span className="text-sm font-semibold text-[var(--color-text)]">
+              {t('assistantTitle')}
+            </span>
             <button
               type="button"
               onClick={chat.close}
-              className="text-gray-500 hover:text-gray-700"
-              aria-label="Close chat"
+              className="text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
+              aria-label={t('close')}
             >
               ✕
             </button>
@@ -30,16 +34,22 @@ export function ChatWidget() {
             {chat.messages.map((message) => (
               <ChatMessage key={message.id} message={message} />
             ))}
-            {chat.isLoading ? <p className="text-xs text-gray-500">Typing...</p> : null}
+            {chat.isLoading ? (
+              <p className="text-xs text-[var(--color-text-muted)]">{t('typing')}</p>
+            ) : null}
           </div>
-          <div className="border-t border-gray-200 p-3">
+          <div className="border-t border-[var(--color-border)] p-3">
             <ChatSuggestions
               suggestions={chat.suggestedQuestions}
               onSelect={chat.sendMessage}
               disabled={chat.isLoading}
             />
             <div className="mt-2">
-              <ChatInput onSend={chat.sendMessage} disabled={chat.isLoading} />
+              <ChatInput
+                onSend={chat.sendMessage}
+                disabled={chat.isLoading}
+                placeholder={t('typeQuestion')}
+              />
             </div>
           </div>
         </div>
@@ -47,9 +57,9 @@ export function ChatWidget() {
         <button
           type="button"
           onClick={chat.open}
-          className="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-lg hover:bg-blue-700"
+          className="rounded-full bg-[var(--color-button-primary)] px-4 py-2 text-sm font-medium text-[var(--color-button-text)] shadow-lg hover:opacity-90"
         >
-          Chat
+          {t('chat')}
         </button>
       )}
     </div>
