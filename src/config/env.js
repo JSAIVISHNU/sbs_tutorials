@@ -19,4 +19,5 @@ export function validateEnv() {
 export const env = {
   supabaseUrl: import.meta.env.VITE_SUPABASE_URL ?? '',
   supabaseAnonKey: import.meta.env.VITE_SUPABASE_ANON_KEY ?? '',
+  aiEnabled: import.meta.env.VITE_AI_ENABLED === 'true',
 }

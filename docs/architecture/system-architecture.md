@@ -20,6 +20,15 @@ It communicates with Supabase (PostgreSQL + Row Level Security) for admission en
 3. On success, `submitEnquiry` inserts into Supabase `enquiries` table.
 4. RLS allows anonymous insert only; reads are denied publicly.
 
+## AI Flow
+
+1. User sends a message in the chat widget.
+2. `useChat` calls `askAssistant` in `aiService`.
+3. Request goes to Supabase Edge Function `ai-chat`.
+4. Edge Function validates input, applies rate limiting, calls Gemini.
+5. Response is truncated and returned as plain text.
+6. Frontend renders the answer; failures fall back to WhatsApp contact.
+
 ## Deployment
 
 - Frontend deployed to Vercel.
