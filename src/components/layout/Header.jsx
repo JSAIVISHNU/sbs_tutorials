@@ -6,7 +6,10 @@ export function Header() {
   return (
     <header className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <span className="text-lg font-bold text-[var(--color-text)]">{SITE.name}</span>
+        <div className="flex items-center gap-2.5">
+          <img alt="SBS Tutorials Logo" className="h-8 w-auto object-contain" src="/images/logo.png" />
+          <span className="text-lg font-bold text-[var(--color-text)]">{SITE.name}</span>
+        </div>
         <nav aria-label="Primary">
           <ul className="flex gap-4 text-sm text-[var(--color-text-muted)]">
             <li>{t('home')}</li>

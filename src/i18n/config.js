@@ -4,7 +4,7 @@ export const i18nConfig = {
   lng: DEFAULT_LANGUAGE,
   fallbackLng: DEFAULT_LANGUAGE,
   supportedLngs: ENABLED_LANGUAGES,
-  ns: ['common', 'navigation', 'home', 'courses', 'contact', 'chatbot'],
+  ns: ['common', 'navigation', 'home', 'courses', 'contact', 'chatbot', 'footer'],
   defaultNS: 'common',
   interpolation: {
     escapeValue: false,

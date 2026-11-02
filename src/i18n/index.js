@@ -8,6 +8,7 @@ import enHome from './locales/en/home.json'
 import enCourses from './locales/en/courses.json'
 import enContact from './locales/en/contact.json'
 import enChatbot from './locales/en/chatbot.json'
+import enFooter from './locales/en/footer.json'
 
 const resources = {
   en: {
@@ -17,6 +18,7 @@ const resources = {
     courses: enCourses,
     contact: enContact,
     chatbot: enChatbot,
+    footer: enFooter,
   },
 }
 
