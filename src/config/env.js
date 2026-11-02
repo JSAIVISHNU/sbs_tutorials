@@ -9,9 +9,6 @@ export function validateEnv() {
 
   if (missing.length > 0) {
     const message = `Missing required environment variables: ${missing.join(', ')}. Copy .env.example to .env and fill in the values.`
-    if (import.meta.env.DEV) {
-      throw new Error(message)
-    }
     console.error(message)
   }
 }
@@ -19,4 +16,5 @@ export function validateEnv() {
 export const env = {
   supabaseUrl: import.meta.env.VITE_SUPABASE_URL ?? '',
   supabaseAnonKey: import.meta.env.VITE_SUPABASE_ANON_KEY ?? '',
+  aiEnabled: import.meta.env.VITE_AI_ENABLED === 'true',
 }
