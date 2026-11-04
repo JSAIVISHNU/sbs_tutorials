@@ -6,9 +6,9 @@ export function Footer() {
       <div className="max-w-[1280px] mx-auto px-[1.25rem] lg:px-[3rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-[1.5rem]">
         <div className="lg:col-span-4 flex flex-col gap-[0.75rem]">
           <div className="flex items-center gap-[0.5rem]">
-            <img alt="SBS TUTORIALS brand logo" className="h-9 w-auto object-contain" src={LOGO_URL} />
+            <img alt="Brilliant Hub brand logo" className="h-9 w-auto object-contain" src={LOGO_URL} />
             <span className="font-['Source_Serif_4'] text-[22px] leading-[30px] text-[#03345d] font-bold">
-              SBS TUTORIALS
+              Brilliant Hub
             </span>
           </div>
           <p className="font-['Plus_Jakarta_Sans'] text-[15px] leading-[24px] text-[#43474e] pr-[1.25rem]">
@@ -101,7 +101,7 @@ export function Footer() {
         </div>
       </div>
       <div className="max-w-[1280px] mx-auto px-[1.25rem] lg:px-[3rem] mt-[2rem] pt-[1.25rem] border-t border-[#c3c6d0]/30 flex flex-col sm:flex-row items-center justify-between text-[#43474e] font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px]">
-        <p>© 2025 SBS TUTORIALS. All rights reserved. Empowering young learners in Uttarahalli.</p>
+        <p>© 2025 Brilliant Hub. All rights reserved. Empowering young learners in Uttarahalli.</p>
         <p className="mt-[0.375rem] sm:mt-0 font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] text-[#7d5700] font-medium">
           Excellence in Academics &amp; Creative Arts
         </p>

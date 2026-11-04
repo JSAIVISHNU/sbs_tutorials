@@ -14,9 +14,9 @@ const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 10
 
 const FALLBACK_MESSAGE =
-  "Sorry, I don't have confirmed information about that. Please contact SBS TUTORIALS directly on 9180473902 or 9916522810."
+  "Sorry, I don't have confirmed information about that. Please contact Brilliant Hub directly on 9180473902 or 9916522810."
 
-const KNOWLEDGE_BASE = `Institute: SBS TUTORIALS
+const KNOWLEDGE_BASE = `Institute: Brilliant Hub
 Location: Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru
 Contact: 9180473902, 9916522810
 
@@ -38,7 +38,7 @@ Rules:
 
 Fallback message: ${FALLBACK_MESSAGE}`
 
-const SYSTEM_PROMPT = `You are the SBS TUTORIALS admission assistant.\n\nYou may answer ONLY using the approved institute information below.\n\n${KNOWLEDGE_BASE}`
+const SYSTEM_PROMPT = `You are the Brilliant Hub admission assistant.\n\nYou may answer ONLY using the approved institute information below.\n\n${KNOWLEDGE_BASE}`
 
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
 
