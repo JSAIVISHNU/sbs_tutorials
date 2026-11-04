@@ -1,7 +1,7 @@
 import { Navbar } from '../components/layout/Navbar.jsx'
 import { HeroSection } from '../components/sections/HeroSection.jsx'
-import { AboutSection } from '../components/sections/AboutSection.jsx'
 import { CoursesSection } from '../components/sections/CoursesSection.jsx'
+import { AboutSection } from '../components/sections/AboutSection.jsx'
 import { WhyChooseSection } from '../components/sections/WhyChooseSection.jsx'
 import { AdmissionsCTA } from '../components/sections/AdmissionsCTA.jsx'
 import { ContactSection } from '../components/sections/ContactSection.jsx'
@@ -15,8 +15,8 @@ export function HomePage() {
       <Navbar />
       <main className="pt-20">
         <HeroSection />
-        <AboutSection />
         <CoursesSection />
+        <AboutSection />
         <WhyChooseSection />
         <AdmissionsCTA />
         <ContactSection />
@@ -27,3 +27,5 @@ export function HomePage() {
     </div>
   )
 }
+
+export default HomePage

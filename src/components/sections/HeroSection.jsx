@@ -1,53 +1,4 @@
-import { useState } from 'react'
-
 export function HeroSection() {
-  const [selectedPillar, setSelectedPillar] = useState('01')
-
-  const PILLARS = [
-    {
-      num: '01',
-      title: 'School Tuition',
-      sub: 'LKG to 10th Standard',
-      color: '#0284c7',
-      bgLight: 'bg-[#f0f9ff]',
-      borderColor: 'border-[#38bdf8]',
-      icon: 'school',
-      bullets: ['Personalised Attention', 'Homework & Exam Prep', 'Strong Academic Foundation'],
-    },
-    {
-      num: '02',
-      title: 'Music Classes',
-      sub: 'Shloka • Devaranama',
-      color: '#7c3aed',
-      bgLight: 'bg-[#faf5ff]',
-      borderColor: 'border-[#c084fc]',
-      icon: 'music_note',
-      bullets: ['Devotional Elements', 'Traditional Instruments', 'Vocal & Shloka Recitation'],
-    },
-    {
-      num: '03',
-      title: 'Drawing Classes',
-      sub: 'Learn Art & Creativity',
-      color: '#ea580c',
-      bgLight: 'bg-[#fff7ed]',
-      borderColor: 'border-[#fb923c]',
-      icon: 'palette',
-      bullets: ['Colouring & Artistic Colours', 'Fine Arts & Sketching', 'Freehand Imagination'],
-    },
-    {
-      num: '04',
-      title: 'Abacus Classes',
-      sub: 'Mental Maths & Calculation',
-      color: '#16a34a',
-      bgLight: 'bg-[#f0fdf4]',
-      borderColor: 'border-[#4ade80]',
-      icon: 'calculate',
-      bullets: ['Mental Maths & Speed', 'Photographic Memory', 'Enduring Math Confidence'],
-    },
-  ]
-
-  const activePillar = PILLARS.find((p) => p.num === selectedPillar) || PILLARS[0]
-
   return (
     <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#eaf2fb] via-[#f8faff] to-white py-[2.5rem] lg:py-[4rem]">
       {/* Decorative radial glows */}
@@ -57,14 +8,14 @@ export function HeroSection() {
       <div className="max-w-[1280px] mx-auto px-[1.25rem] lg:px-[3rem] relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-[2rem] lg:gap-[3rem] items-center">
           
-          {/* Left Column: Pamphlet Style Branding & Headline */}
+          {/* Left Column: Branding, Headline & Value Proposition */}
           <div className="lg:col-span-7 flex flex-col items-start gap-[1.25rem]">
             
             {/* Admissions Open Golden Ribbon Banner */}
             <div className="flex flex-col gap-1.5 items-start">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#fdc254] via-[#f59e0b] to-[#fdc254] text-[#5c3e00] font-['Plus_Jakarta_Sans'] text-[12px] sm:text-[13px] font-black tracking-wider uppercase shadow-sm border border-[#eab308]">
                 <span>★</span>
-                <span>ADMISSIONS OPEN</span>
+                <span>ADMISSIONS OPEN 2025–26</span>
                 <span>★</span>
               </div>
               <div className="inline-flex items-center gap-2 font-['Plus_Jakarta_Sans'] text-[11px] sm:text-[12px] font-extrabold tracking-[0.1em] text-[#03345d] uppercase">
@@ -79,7 +30,7 @@ export function HeroSection() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="font-['Source_Serif_4'] text-[36px] sm:text-[50px] lg:text-[62px] leading-[42px] sm:leading-[56px] lg:leading-[68px] font-bold text-[#03345d] tracking-tight">
+            <h1 className="font-['Source_Serif_4'] text-[36px] sm:text-[50px] lg:text-[60px] leading-[42px] sm:leading-[56px] lg:leading-[68px] font-bold text-[#03345d] tracking-tight">
               A Brighter Future{' '}
               <span className="relative inline-block text-[#b45309]">
                 Starts Here!
@@ -99,38 +50,32 @@ export function HeroSection() {
             </p>
 
             <p className="font-['Plus_Jakarta_Sans'] text-[15px] sm:text-[16px] leading-[26px] text-[#43474e] max-w-xl">
-              A comprehensive neighbourhood learning centre providing personalized school tuition, traditional music,
+              A premier neighbourhood learning hub providing personalised school tuition, traditional music,
               creative fine arts, and speed mental maths in Uttarahalli, Bengaluru.
             </p>
 
-            {/* The 4 Interactive Skill Badges (01 to 04) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full pt-1">
-              {PILLARS.map((p) => {
-                const isActive = p.num === selectedPillar
-                return (
-                  <button
-                    key={p.num}
-                    type="button"
-                    onClick={() => setSelectedPillar(p.num)}
-                    className={`flex flex-col text-left p-2.5 rounded-xl transition-all cursor-pointer border ${
-                      isActive
-                        ? 'bg-white shadow-md ring-2 ring-offset-1'
-                        : 'bg-white/80 hover:bg-white shadow-xs'
-                    }`}
-                    style={{
-                      borderColor: p.borderColor.replace('border-', ''),
-                      ringColor: isActive ? p.color : 'transparent',
-                    }}
-                  >
-                    <span className="font-['Plus_Jakarta_Sans'] text-[11px] font-black" style={{ color: p.color }}>
-                      {p.num} {p.title.split(' ')[0].toUpperCase()}
-                    </span>
-                    <span className="text-[12px] font-bold text-[#03345d] leading-tight truncate">
-                      {p.sub}
-                    </span>
-                  </button>
-                )
-              })}
+            {/* 4 Quick Jump Badges */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full pt-1">
+              {[
+                { num: '01', title: 'School Tuition', sub: 'LKG to 10th', color: '#0284c7', bg: '#f0f9ff' },
+                { num: '02', title: 'Music Classes', sub: 'Shloka & Devaranama', color: '#7c3aed', bg: '#faf5ff' },
+                { num: '03', title: 'Drawing Classes', sub: 'Art & Creativity', color: '#ea580c', bg: '#fff7ed' },
+                { num: '04', title: 'Abacus Classes', sub: 'Mental Maths', color: '#16a34a', bg: '#f0fdf4' },
+              ].map((p) => (
+                <a
+                  key={p.num}
+                  href="#courses"
+                  className="flex flex-col p-2.5 rounded-xl transition-all border hover:shadow-md hover:-translate-y-0.5"
+                  style={{ backgroundColor: p.bg, borderColor: `${p.color}40` }}
+                >
+                  <span className="font-['Plus_Jakarta_Sans'] text-[11px] font-black" style={{ color: p.color }}>
+                    {p.num} {p.title.split(' ')[0].toUpperCase()}
+                  </span>
+                  <span className="text-[12px] font-bold text-[#03345d] leading-tight truncate">
+                    {p.sub}
+                  </span>
+                </a>
+              ))}
             </div>
 
             {/* Action Buttons */}
@@ -148,7 +93,7 @@ export function HeroSection() {
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#03345d] text-white hover:bg-[#244b75] px-[1.75rem] py-[0.875rem] rounded-xl font-['Plus_Jakarta_Sans'] text-[15px] font-semibold transition-all shadow-md"
                 href="#courses"
               >
-                <span>Explore All 4 Courses</span>
+                <span>Explore 4 Programs</span>
                 <span className="material-symbols-outlined text-[18px]">arrow_downward</span>
               </a>
             </div>
@@ -158,9 +103,9 @@ export function HeroSection() {
               <div className="inline-flex items-center gap-1.5 font-bold text-[#03345d] bg-[#fdc254]/25 px-3 py-1.5 rounded-lg border border-[#fdc254]">
                 <span className="material-symbols-outlined text-[#16a34a] text-[18px]">call</span>
                 <span className="uppercase text-[11px] tracking-wider text-[#7d5700]">Hotlines:</span>
-                <a href="tel:9180473902" className="hover:underline">080-473902</a>
+                <a href="tel:9180473902" className="hover:underline">9180473902</a>
                 <span>/</span>
-                <a href="tel:+918951412810" className="hover:underline">+91 89514 12810</a>
+                <a href="tel:+918951412810" className="hover:underline">89514 12810</a>
               </div>
               <span className="hidden sm:inline text-gray-300">•</span>
               <div className="inline-flex items-center gap-1 text-[#03345d] font-semibold">
@@ -170,11 +115,11 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right Column: Pamphlet Theme Feature Card (Pure Native UI) */}
+          {/* Right Column: Brilliant Hub Spotlight Card */}
           <div className="lg:col-span-5 relative flex justify-center mt-2 lg:mt-0">
             <div className="w-full max-w-[440px] rounded-3xl bg-gradient-to-b from-[#03345d] via-[#02244a] to-[#01162d] p-6 sm:p-7 text-white shadow-[0_20px_50px_rgba(3,52,93,0.3)] border-2 border-[#fdc254] relative overflow-hidden">
               
-              {/* Gold Corner Ribbon */}
+              {/* Header inside Card */}
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <div className="flex items-center gap-2.5">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#fdc254] to-[#f59e0b] text-[#5c3e00] flex items-center justify-center font-bold shadow-sm">
@@ -194,75 +139,45 @@ export function HeroSection() {
                 </div>
               </div>
 
-              {/* Dynamic Feature Preview matching selected pillar */}
+              {/* What makes our hub unique */}
               <div className="my-5 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="px-2.5 py-0.5 rounded-lg text-white font-['Source_Serif_4'] font-black text-sm"
-                      style={{ backgroundColor: activePillar.color }}
-                    >
-                      {activePillar.num}
-                    </span>
-                    <h2 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white">
-                      {activePillar.title}
-                    </h2>
-                  </div>
-                  <span className="material-symbols-outlined text-[24px]" style={{ color: activePillar.color }}>
-                    {activePillar.icon}
-                  </span>
-                </div>
-
-                <p className="font-['Plus_Jakarta_Sans'] text-xs font-bold uppercase tracking-wider text-[#fdc254]">
-                  {activePillar.sub}
-                </p>
-
-                <ul className="flex flex-col gap-2 pt-2 border-t border-white/10">
-                  {activePillar.bullets.map((bullet) => (
-                    <li key={bullet} className="flex items-center gap-2 text-[13px] text-gray-200">
-                      <span className="material-symbols-outlined text-[16px]" style={{ color: activePillar.color }}>
-                        check_circle
+                <span className="font-['Plus_Jakarta_Sans'] text-[11px] font-bold text-[#fdc254] uppercase tracking-wider">
+                  Why Families Choose Brilliant Hub
+                </span>
+                
+                <ul className="flex flex-col gap-2.5">
+                  {[
+                    { icon: 'groups', label: 'Micro-Batches (10–12 Students)', desc: 'Dedicated focus on every child' },
+                    { icon: 'auto_stories', label: 'CBSE, ICSE & State Syllabus', desc: 'Homework support & weekly tests' },
+                    { icon: 'hub', label: '4 Programs in 1 Safe Campus', desc: 'No daily rushing between multiple centers' },
+                    { icon: 'verified', label: 'Free Diagnostic Assessment', desc: 'Identify your child\'s exact learning level' },
+                  ].map((item) => (
+                    <li key={item.label} className="flex items-start gap-2.5 text-[13px] text-gray-200">
+                      <span className="material-symbols-outlined text-[18px] text-[#fdc254] shrink-0 mt-0.5">
+                        {item.icon}
                       </span>
-                      <span>{bullet}</span>
+                      <div className="flex flex-col">
+                        <span className="font-bold text-white leading-tight">{item.label}</span>
+                        <span className="text-[12px] text-gray-300">{item.desc}</span>
+                      </div>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* 4 Mini Pills to switch */}
-              <div className="grid grid-cols-4 gap-1.5 pb-4">
-                {PILLARS.map((p) => (
-                  <button
-                    key={p.num}
-                    type="button"
-                    onClick={() => setSelectedPillar(p.num)}
-                    className={`py-2 px-1 rounded-lg text-center font-bold text-[11px] transition-all cursor-pointer ${
-                      p.num === selectedPillar
-                        ? 'text-white shadow-sm ring-1 ring-white'
-                        : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                    }`}
-                    style={{
-                      backgroundColor: p.num === selectedPillar ? p.color : undefined,
-                    }}
-                  >
-                    {p.num}
-                  </button>
-                ))}
-              </div>
-
               {/* Bottom Hotlines & Action inside card */}
-              <div className="pt-4 border-t border-white/10 flex flex-col gap-2">
+              <div className="pt-4 border-t border-white/10 flex flex-col gap-2.5">
                 <div className="text-center font-['Plus_Jakarta_Sans'] text-[11px] font-extrabold text-[#fdc254] tracking-wider uppercase">
                   Four Skills • One Place • Endless Possibilities
                 </div>
                 <a
-                  href={`https://wa.me/918951412810?text=Hello%20Brilliant%20Hub,%20I%20would%20like%20to%20enquire%20about%20${encodeURIComponent(activePillar.title)}.`}
+                  href="https://wa.me/918951412810?text=Hello%20Brilliant%20Hub,%20I%20would%20like%20to%20book%20a%20free%20concept%20assessment."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-['Plus_Jakarta_Sans'] text-[13px] font-bold text-[#5c3e00] bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] transition-all shadow-md active:scale-[0.99]"
                 >
-                  <span className="material-symbols-outlined text-[18px]">chat</span>
-                  <span>Enquire for {activePillar.title}</span>
+                  <span className="material-symbols-outlined text-[18px]">calendar_add_on</span>
+                  <span>Book Free Concept Assessment</span>
                 </a>
               </div>
 

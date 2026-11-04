@@ -1,163 +1,159 @@
 export function AdmissionsCTA() {
+  const TIMINGS = [
+    {
+      period: 'Morning Batches',
+      time: '8:00 AM – 11:30 AM',
+      icon: 'wb_sunny',
+      color: '#0284c7',
+      bg: 'bg-[#f0f9ff]',
+      badge: 'Mon – Sat',
+      focus: 'Abacus Speed Maths • Early Concept Revision • Weekend Hobby Slots',
+      desc: 'Ideal for students seeking fresh morning focus, rapid arithmetic calculations, and weekend masterclasses.',
+    },
+    {
+      period: 'Evening Batches',
+      time: '4:30 PM – 7:30 PM',
+      icon: 'sunset',
+      color: '#7c3aed',
+      bg: 'bg-[#faf5ff]',
+      badge: 'Mon – Fri',
+      focus: 'School Tuition (LKG–10th) • Homework Support • Music & Shlokas',
+      desc: 'The popular after-school slot: guided homework completion, chapter-wise syllabus coverage, and traditional devotional music.',
+    },
+    {
+      period: 'Weekend Specials',
+      time: 'Sat & Sun Flexible Slots',
+      icon: 'palette',
+      color: '#ea580c',
+      bg: 'bg-[#fff7ed]',
+      badge: 'Weekends',
+      focus: 'Drawing & Fine Arts • Devaranama Vocals • Mock Exam Series',
+      desc: 'Dedicated creative studio time and vocal chanting for students with packed weekday academic timetables.',
+    },
+  ]
+
   return (
-    <section className="w-full py-[3.5rem] relative overflow-hidden bg-[#03345d] text-white">
-      <div className="absolute -right-20 -top-20 w-80 h-80 bg-[#fdc254]/15 rounded-full blur-2xl pointer-events-none" />
-      <div className="absolute left-1/3 -bottom-24 w-96 h-96 bg-[#a5c9fa]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="max-w-[1280px] mx-auto px-[1.25rem] lg:px-[3rem] relative z-10">
-        <div className="w-full bg-gradient-to-br from-[#03345d] via-[#244b75] to-[#03345d] rounded-[2rem] shadow-xl overflow-hidden text-white relative">
-          <div className="p-[1.5rem] lg:p-[3.5rem] grid grid-cols-1 lg:grid-cols-12 gap-[1.5rem] items-center relative z-10">
-            <div className="lg:col-span-7 flex flex-col gap-[1.25rem]">
-              <div className="flex flex-wrap items-center gap-[0.375rem]">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fdc254]/20 text-[#ffdeaa] font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] uppercase tracking-[0.04em] backdrop-blur-sm">
-                  <span className="w-2 h-2 rounded-full bg-[#fdc254] animate-pulse" />
-                  Admissions Open
-                </span>
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/10 text-[#a5c9fa] font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] backdrop-blur-sm">
-                  <span className="material-symbols-outlined text-[14px] text-[#ffdeaa]">home_pin</span>
-                  Uttarahalli Main Road, Bengaluru
-                </span>
-              </div>
-              <div className="flex flex-col gap-[0.375rem]">
-                <h2 className="font-['Source_Serif_4'] text-[28px] lg:text-[40px] leading-[36px] lg:leading-[48px] text-white font-semibold">
-                  Give Your Child a Great Start
-                </h2>
-                <p className="font-['Plus_Jakarta_Sans'] text-[17px] leading-[28px] text-[#97bbec] max-w-xl">
-                  Looking for a friendly place where your child can learn, explore and grow? Get in touch with Brilliant Hub
-                  to know more about our learning programs.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2 pt-1">
-                {[
-                  { icon: 'menu_book', label: 'School Tuition (LKG–10th)' },
-                  { icon: 'music_note', label: 'Music (Shloka & Devaranama)' },
-                  { icon: 'palette', label: 'Drawing Classes' },
-                  { icon: 'calculate', label: 'Abacus Classes' },
-                ].map((item) => (
-                  <span
-                    key={item.label}
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-white font-['Plus_Jakarta_Sans'] text-[12px] leading-[16px] backdrop-blur-sm"
+    <section className="w-full py-[3.5rem] lg:py-[5rem] bg-white relative overflow-hidden">
+      {/* Background radial glow */}
+      <div className="pointer-events-none absolute -top-24 right-1/4 w-96 h-96 bg-[#fdc254]/15 rounded-full blur-3xl" />
+
+      <div className="max-w-[1280px] mx-auto px-[1.25rem] lg:px-[3rem] relative z-10 flex flex-col gap-10">
+        
+        {/* Header */}
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fdc254]/30 border border-[#fdc254] text-[#7d5700] mb-3">
+            <span className="font-['Plus_Jakarta_Sans'] text-[12px] font-extrabold uppercase tracking-wider">
+              ★ BATCH SCHEDULES &amp; TIMINGS ★
+            </span>
+          </div>
+
+          <h2 className="font-['Source_Serif_4'] text-[32px] lg:text-[46px] leading-[40px] lg:leading-[54px] font-bold text-[#03345d] mb-3">
+            Flexible Batches Designed for School Routines
+          </h2>
+
+          <p className="font-['Plus_Jakarta_Sans'] text-[15px] sm:text-[16px] leading-[26px] text-[#43474e]">
+            Choose batch timings that naturally fit your family&apos;s daily routine. Small groups ensure your child
+            never feels rushed or overlooked.
+          </p>
+        </div>
+
+        {/* 3 Timing Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {TIMINGS.map((slot) => (
+            <div
+              key={slot.period}
+              className="flex flex-col justify-between p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+            >
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <div
+                    className={`w-11 h-11 rounded-xl ${slot.bg} flex items-center justify-center`}
+                    style={{ color: slot.color }}
                   >
-                    <span className="material-symbols-outlined text-[15px] text-[#ffdeaa]">{item.icon}</span>
-                    {item.label}
+                    <span className="material-symbols-outlined text-[24px]">{slot.icon}</span>
+                  </div>
+                  <span
+                    className="px-3 py-1 rounded-full font-['Plus_Jakarta_Sans'] text-[11px] font-black tracking-wider uppercase"
+                    style={{ backgroundColor: `${slot.color}15`, color: slot.color }}
+                  >
+                    {slot.badge}
                   </span>
-                ))}
+                </div>
+
+                <div>
+                  <h3 className="font-['Plus_Jakarta_Sans'] text-[18px] font-bold text-[#03345d]">
+                    {slot.period}
+                  </h3>
+                  <div className="font-['Plus_Jakarta_Sans'] text-[13px] font-extrabold text-[#7d5700] mt-0.5">
+                    {slot.time}
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-gray-100 flex flex-col gap-2">
+                  <span className="font-['Plus_Jakarta_Sans'] text-[11px] font-extrabold uppercase tracking-wider text-gray-400">
+                    Included Programs
+                  </span>
+                  <p className="font-['Plus_Jakarta_Sans'] text-[13px] font-bold text-[#03345d]">
+                    {slot.focus}
+                  </p>
+                  <p className="font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px] text-[#43474e]">
+                    {slot.desc}
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-[0.75rem] pt-[0.375rem]">
-                <a
-                  className="inline-flex items-center justify-center gap-2.5 px-[1.5rem] py-[0.875rem] rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] font-bold transition-all shadow-md hover:shadow-lg active:scale-[0.99] group"
-                  href="https://wa.me/918951412810"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <svg className="w-5 h-5 fill-current text-white transition-transform group-hover:scale-110" viewBox="0 0 24 24">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path>
-                  </svg>
-                  <span>Enquire on WhatsApp</span>
-                </a>
-                <a
-                  className="inline-flex items-center justify-center gap-2 px-[1.5rem] py-[0.875rem] rounded-xl bg-white/10 text-white hover:bg-white/20 font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] font-bold transition-all shadow-sm hover:shadow active:scale-[0.99] group"
-                  href="tel:+918951412810"
-                >
-                  <span className="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-12">call</span>
-                  <span>Call Us Direct</span>
-                </a>
-              </div>
-              <div className="flex items-center gap-[0.75rem] pt-1">
-                <span className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] uppercase tracking-[0.04em] text-[#ffdeaa]">
-                  Hotlines:
-                </span>
-                <a
-                  className="font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] font-bold text-white hover:text-[#fdc254] transition-colors underline decoration-[#fdc254]/40 underline-offset-4"
-                  href="tel:+9180473902"
-                >
-                  +91 80473902
-                </a>
-                <span className="text-white/40">|</span>
-                <a
-                  className="font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] font-bold text-white hover:text-[#fdc254] transition-colors underline decoration-[#fdc254]/40 underline-offset-4"
-                  href="tel:+918951412810"
-                >
-                  +91 8951412810
-                </a>
-              </div>
+
+              <div
+                className="h-1.5 w-full mt-5 rounded-full"
+                style={{ backgroundColor: slot.color }}
+              />
             </div>
-            <div className="lg:col-span-5 flex flex-col gap-[0.75rem]">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-[1.25rem] flex flex-col gap-[1.25rem]">
-                <div className="flex items-start gap-[0.75rem]">
-                  <div className="w-12 h-12 rounded-xl bg-[#fdc254] text-[#725000] flex items-center justify-center shrink-0 shadow-sm">
-                    <span className="material-symbols-outlined text-[26px]">chair</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] text-white font-bold">
-                      Personal Attention
-                    </span>
-                    <span className="font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px] text-[#97bbec]">
-                      Small, supportive groups in a cosy, welcoming home study space designed for calm and
-                      distraction-free learning.
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-[0.75rem] pt-[0.375rem]">
-                  <div className="w-12 h-12 rounded-xl bg-[#a5c9fa]/20 text-[#ffdeaa] flex items-center justify-center shrink-0">
-                    <span className="material-symbols-outlined text-[26px]">pin_drop</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] text-white font-bold">
-                      Convenient Neighbourhood
-                    </span>
-                    <span className="font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px] text-[#97bbec]">
-                      Easily accessible near Vishal Mega Mart, Uttarahalli Main Road. Safe drop-off and pickup for local
-                      parents.
-                    </span>
-                  </div>
-                </div>
-                <div className="w-full bg-[#03345d]/40 rounded-xl p-[0.75rem] flex items-center justify-between">
-                  <div className="flex items-center gap-[0.375rem]">
-                    <div className="flex -space-x-1.5 overflow-hidden">
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#fdc254] text-[#725000] text-xs font-bold">
-                        S
-                      </span>
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#a5c9fa] text-[#03345d] text-xs font-bold">
-                        B
-                      </span>
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#d5e7dd] text-[#273630] text-xs font-bold">
-                        S
-                      </span>
-                    </div>
-                    <span className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] text-[#97bbec] pl-1">
-                      Care • Clarity • Confidence
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 text-[#ffdeaa] font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px]">
-                    <span className="material-symbols-outlined text-[16px]">verified</span>
-                    <span>Walk-ins Welcome</span>
-                  </div>
-                </div>
+          ))}
+        </div>
+
+        {/* Diagnostic Assessment Banner */}
+        <div className="rounded-2xl bg-gradient-to-r from-[#002244] via-[#03345d] to-[#01182e] p-6 lg:p-8 text-white shadow-xl border-2 border-[#fdc254] flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-[#fdc254] text-[#5c3e00] flex items-center justify-center shrink-0 font-bold shadow-sm">
+              <span className="material-symbols-outlined text-[28px]">psychology</span>
+            </div>
+            <div className="flex flex-col text-center lg:text-left">
+              <div className="inline-flex items-center justify-center lg:justify-start gap-2 text-[#fdc254] font-['Plus_Jakarta_Sans'] text-[12px] font-black uppercase tracking-wider">
+                <span>★</span>
+                <span>Complimentary 1-on-1 Evaluation</span>
+                <span>★</span>
               </div>
-              <div className="bg-white rounded-xl p-[0.75rem] shadow-sm flex items-center justify-between text-[#161c24]">
-                <div className="flex items-center gap-[0.375rem]">
-                  <span className="material-symbols-outlined text-[#7d5700] text-[22px]">contact_support</span>
-                  <div className="flex flex-col">
-                    <span className="font-['Plus_Jakarta_Sans'] text-[12px] leading-[16px] text-[#03345d] font-bold">
-                      Have Questions?
-                    </span>
-                    <span className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] text-[#43474e]">
-                      Drop by or give us a quick ring
-                    </span>
-                  </div>
-                </div>
-                <a
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#eef4ff] hover:bg-[#e3e8f3] text-[#03345d] font-['Plus_Jakarta_Sans'] text-[12px] leading-[16px] font-semibold transition-colors"
-                  href="tel:+918951412810"
-                >
-                  <span>Connect</span>
-                  <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                </a>
-              </div>
+              <h3 className="font-['Source_Serif_4'] text-[20px] sm:text-[24px] font-bold text-white mt-1">
+                Free Diagnostic Concept Test for Every Child
+              </h3>
+              <p className="font-['Plus_Jakarta_Sans'] text-[13px] text-gray-300 mt-1">
+                Before joining, our teachers evaluate your child&apos;s current understanding to recommend the ideal batch and focus areas.
+              </p>
             </div>
           </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+            <a
+              href="https://wa.me/918951412810?text=Hello%20Brilliant%20Hub,%20I%20would%20like%20to%20reserve%20a%20batch%20slot."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-['Plus_Jakarta_Sans'] text-[14px] font-bold transition-all shadow-md active:scale-[0.99]"
+            >
+              <span className="material-symbols-outlined text-[18px]">chat</span>
+              <span>Reserve Batch Slot on WhatsApp</span>
+            </a>
+            <a
+              href="tel:9180473902"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-['Plus_Jakarta_Sans'] text-[14px] font-bold transition-colors border border-white/20"
+            >
+              <span className="material-symbols-outlined text-[18px]">call</span>
+              <span>Call Helpline</span>
+            </a>
+          </div>
         </div>
+
       </div>
     </section>
   )
 }
+
+export default AdmissionsCTA
