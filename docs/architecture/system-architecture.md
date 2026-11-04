@@ -2,7 +2,7 @@
 
 ## Overview
 
-SBS Tutorials website is a single-page React application built with Vite and Tailwind CSS.
+Brilliant Hub website is a single-page React application built with Vite and Tailwind CSS.
 It communicates with Supabase (PostgreSQL + Row Level Security) for admission enquiry storage.
 
 ## Layers

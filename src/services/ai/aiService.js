@@ -48,7 +48,7 @@ export const aiProvider = {
     if (!error) return FALLBACK_MESSAGE
     const code = error.message || error.code || ''
     if (code === 'AI_DISABLED') {
-      return 'The admission assistant is currently unavailable. Please contact SBS TUTORIALS on 9180473902 or 9916522810.'
+      return 'The admission assistant is currently unavailable. Please contact Brilliant Hub on 9180473902 or 9916522810.'
     }
     return FALLBACK_MESSAGE
   },

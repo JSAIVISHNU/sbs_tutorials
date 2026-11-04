@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { askAssistant } from '../services/ai/aiService.js'
+import { askAssistant } from '../services/chatService.js'
 import { FALLBACK_MESSAGE, SUGGESTED_QUESTIONS } from '../data/faqKnowledgeBase.js'
 import i18n from '../i18n/index.js'
 

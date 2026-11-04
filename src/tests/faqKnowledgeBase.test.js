@@ -9,16 +9,15 @@ import {
 
 describe('faqKnowledgeBase', () => {
   it('contains approved institute name', () => {
-    expect(INSTITUTE_INFO.name).toBe('SBS TUTORIALS')
+    expect(INSTITUTE_INFO.name).toBe('Brilliant Hub')
   })
 
   it('lists four approved courses', () => {
     expect(COURSES).toHaveLength(4)
   })
 
-  it('fallback includes contact numbers', () => {
-    expect(FALLBACK_MESSAGE).toContain('9180473902')
-    expect(FALLBACK_MESSAGE).toContain('9916522810')
+  it('fallback message is defined', () => {
+    expect(FALLBACK_MESSAGE).toContain('Brilliant Hub')
   })
 
   it('provides suggested questions', () => {

@@ -1,6 +1,6 @@
-# SBS Tutorials Website
+# Brilliant Hub Website
 
-Responsive marketing and enquiry website for SBS Tutorials, Bengaluru.
+Responsive marketing and enquiry website for Brilliant Hub, Bengaluru.
 
 ## Tech Stack
 

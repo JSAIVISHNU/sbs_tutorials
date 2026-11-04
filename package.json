@@ -13,7 +13,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:supabase": "node scripts/verify-supabase.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",
@@ -42,6 +43,7 @@
     "prettier": "^3.8.1",
     "tailwindcss": "^4.2.2",
     "vite": "^8.3.5",
+    "vite-plugin-pwa": "^2.0.0",
     "vitest": "^3.2.4"
   }
 }

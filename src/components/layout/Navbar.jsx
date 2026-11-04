@@ -1,47 +1,46 @@
-import { useTranslation } from 'react-i18next'
-
-const LOGO_URL = '/images/logo.png'
+const LOGO_URL =
+  'https://lh3.googleusercontent.com/aida/AEtjO1Uc5JBzMrvtnjGtLo0goqLVjrDwFpOc85gS-JRSegewMAHi9MONpobCsbwp3zi9imbVt3A6AIOWaWC5jQ3lBkZYEpR8pPKjsd4dVMnZ-L0REsjFKZ0l04osXcwPTjOjuIa8MA-M7PiLTKm8Rvc3RWJwEHihFfkaphL_3aVf2LHKv7ZCYgqouMxKmJos-6QuhIo61CTJN2eSBsrcGYOqZjU_1kfLOt_cHg9iNSQcVKA'
 
 export function Navbar() {
-  const { t } = useTranslation('navigation')
-  const { t: th } = useTranslation('home')
-
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(36,75,117,0.04)]">
-      <div className="h-20 max-w-[1280px] mx-auto px-[1rem] lg:px-[3rem] flex items-center justify-between gap-[1.5rem]">
-        <a href="#home" className="flex items-center gap-[0.75rem] group cursor-pointer">
-          <img alt="SBS Tutorials Logo" className="h-10 sm:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-105" src={LOGO_URL} />
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#f8f9ff]/90 backdrop-blur-xl shadow-[0_4px_20px_-2px_rgba(36,75,117,0.06)]">
+      <div className="h-20 max-w-[1280px] mx-auto px-[1.25rem] lg:px-[3rem] flex items-center justify-between">
+        <div className="flex items-center gap-[0.75rem]">
+          <img alt="Brilliant Hub brand logo" className="h-8 w-auto object-contain" src={LOGO_URL} />
           <div className="flex flex-col">
-            <span className="font-['Plus_Jakarta_Sans'] text-[20px] leading-[26px] font-bold text-[#244b75] tracking-tight group-hover:text-[#03345d] transition-colors">
-              {th('title')}
+            <span className="font-['Source_Serif_4'] text-[22px] leading-[30px] font-semibold text-[#03345d] tracking-tight">
+              Brilliant Hub
             </span>
-            <span className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] font-medium text-[#43474e] tracking-[0.04em] uppercase">
-              {th('subtitle')}
+            <span className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] font-semibold text-[#7d5700] tracking-[0.04em] uppercase">
+              Uttarahalli • Bengaluru
             </span>
           </div>
-        </a>
+        </div>
         <nav className="hidden md:flex items-center gap-[2rem]">
-          <a aria-current="page" className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-bold text-[#03345d]" href="#home">
-            {t('home')}
+          <a className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold text-[#03345d]" href="/">
+            Home
           </a>
-          <a className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold text-[#43474e] hover:text-[#03345d] transition-colors" href="#">
-            {t('about')}
+          <a className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold text-[#43474e] hover:text-[#161c24] transition-colors" href="/about.html">
+            About
           </a>
-          <a className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold text-[#43474e] hover:text-[#03345d] transition-colors" href="#">
-            {t('courses')}
+          <a className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold text-[#43474e] hover:text-[#161c24] transition-colors" href="/courses.html">
+            Courses
           </a>
-          <a className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold text-[#43474e] hover:text-[#03345d] transition-colors" href="#">
-            {t('contact')}
+          <a className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold text-[#43474e] hover:text-[#161c24] transition-colors" href="/admissions.html">
+            Admissions
+          </a>
+          <a className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold text-[#43474e] hover:text-[#161c24] transition-colors" href="/contact.html">
+            Contact
           </a>
         </nav>
-        <div className="flex items-center gap-[1.25rem]">
+        <div className="flex items-center gap-[0.75rem]">
           <a
-            className="inline-flex items-center justify-center bg-[#244b75] text-white hover:bg-[#03345d] px-[1.25rem] py-[0.75rem] rounded-lg font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold transition-all shadow-[0_4px_20px_-2px_rgba(36,75,117,0.12)] hover:shadow-[0_8px_24px_-2px_rgba(36,75,117,0.2)] active:scale-[0.98]"
+            className="inline-flex items-center justify-center bg-[#fdc254] text-[#725000] hover:bg-[#f7bd4f] px-[1.25rem] py-[0.75rem] rounded-lg font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold transition-all shadow-[0_4px_20px_-2px_rgba(36,75,117,0.06)]"
             href="https://wa.me/919180473902"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {th('enquireNow')}
+            Enquire Now
           </a>
           <div className="w-8 h-8 rounded-full bg-[#03345d] flex items-center justify-center">
             <span className="material-symbols-outlined text-white text-[18px]">person</span>

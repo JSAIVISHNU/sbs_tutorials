@@ -1,8 +1,8 @@
 {
-  "welcome": "Hello! I am the SBS TUTORIALS admission assistant. How can I help you today?",
+  "welcome": "Hello! I am the Brilliant Hub admission assistant. How can I help you today?",
   "typing": "Typing...",
   "assistantTitle": "Admission Assistant",
   "chat": "Chat",
   "typeQuestion": "Type your question...",
-  "fallback": "Sorry, I don't have confirmed information about that. Please contact SBS TUTORIALS directly on 9180473902 or 9916522810."
+  "fallback": "Sorry, I don't have confirmed information about that. Please contact Brilliant Hub directly on 9180473902 or 9916522810."
 }

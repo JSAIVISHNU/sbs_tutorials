@@ -39,12 +39,24 @@ export default [
     },
   },
   {
-    files: ['**/*.test.{js,jsx}', 'src/tests/**/*.{js,jsx}'],
+    files: ['**/*.test.{js,jsx}', 'src/tests/**/*.{js,jsx}', 'api/*.test.js'],
     languageOptions: {
       globals: {
         ...globals.browser,
         ...globals.node,
         ...globals.vitest,
+      },
+    },
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
+    // Vercel serverless functions use Node.js globals and console is acceptable
+    files: ['api/**/*.js', 'scripts/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
       },
     },
   },

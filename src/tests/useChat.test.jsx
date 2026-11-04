@@ -2,11 +2,12 @@ import { describe, it, expect, vi } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
 import { useChat } from '../hooks/useChat.js'
 
-vi.mock('../services/ai/aiService.js', () => ({
+vi.mock('../services/chatService.js', () => ({
   askAssistant: vi.fn().mockResolvedValue('Approved answer.'),
+  default: vi.fn().mockResolvedValue('Approved answer.'),
 }))
 
-import { askAssistant } from '../services/ai/aiService.js'
+import { askAssistant } from '../services/chatService.js'
 
 describe('useChat', () => {
   it('starts with a welcome message', () => {

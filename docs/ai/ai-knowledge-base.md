@@ -2,7 +2,7 @@
 
 Approved facts only. Missing information is treated as unknown.
 
-Institute: SBS TUTORIALS
+Institute: Brilliant Hub
 Location: Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru
 Contact: 9180473902, 9916522810
 

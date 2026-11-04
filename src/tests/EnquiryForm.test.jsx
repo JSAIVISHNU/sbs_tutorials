@@ -25,9 +25,10 @@ describe('EnquiryForm', () => {
     submitEnquiry.mockResolvedValue({ data: { id: '1' }, error: null })
     render(<EnquiryForm />)
 
-    fireEvent.change(screen.getByLabelText(/parent name/i), { target: { value: 'Jane Doe' } })
-    fireEvent.change(screen.getByLabelText(/phone/i), { target: { value: '9876543210' } })
-    fireEvent.change(screen.getByLabelText(/course/i), { target: { value: 'Music' } })
+    fireEvent.change(screen.getByPlaceholderText(/ramesh kumar/i), { target: { value: 'Jane Doe' } })
+    fireEvent.change(screen.getByPlaceholderText(/9876543210/i), { target: { value: '9876543210' } })
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Class 8 - 10' } })
+    fireEvent.click(screen.getByLabelText(/school tuition/i))
     fireEvent.click(screen.getByRole('button', { name: /submit enquiry/i }))
 
     await waitFor(() => {
@@ -40,9 +41,10 @@ describe('EnquiryForm', () => {
     submitEnquiry.mockResolvedValue({ data: null, error: new Error('fail') })
     render(<EnquiryForm />)
 
-    fireEvent.change(screen.getByLabelText(/parent name/i), { target: { value: 'Jane Doe' } })
-    fireEvent.change(screen.getByLabelText(/phone/i), { target: { value: '9876543210' } })
-    fireEvent.change(screen.getByLabelText(/course/i), { target: { value: 'Music' } })
+    fireEvent.change(screen.getByPlaceholderText(/ramesh kumar/i), { target: { value: 'Jane Doe' } })
+    fireEvent.change(screen.getByPlaceholderText(/9876543210/i), { target: { value: '9876543210' } })
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Class 8 - 10' } })
+    fireEvent.click(screen.getByLabelText(/school tuition/i))
     fireEvent.click(screen.getByRole('button', { name: /submit enquiry/i }))
 
     await waitFor(() => {
