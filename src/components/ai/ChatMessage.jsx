@@ -1,5 +1,6 @@
 export function ChatMessage({ message }) {
   const isUser = message.role === 'user'
+  const text = message.text || (isUser ? '' : 'Please contact Brilliant Hub directly for confirmation.')
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
       <div
@@ -7,7 +8,7 @@ export function ChatMessage({ message }) {
           isUser ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900'
         }`}
       >
-        {message.text}
+        {text}
       </div>
     </div>
   )

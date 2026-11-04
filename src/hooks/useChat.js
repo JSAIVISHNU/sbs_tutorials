@@ -1,22 +1,36 @@
 import { useState, useCallback } from 'react'
 import { askAssistant } from '../services/chatService.js'
-import { FALLBACK_MESSAGE, SUGGESTED_QUESTIONS } from '../data/faqKnowledgeBase.js'
+import { FALLBACK_MESSAGE, SUGGESTED_QUESTIONS, getLocalAnswer } from '../data/faqKnowledgeBase.js'
 import i18n from '../i18n/index.js'
 
-const WELCOME_MESSAGE = {
-  id: 'welcome',
-  role: 'assistant',
-  text: i18n.t('chatbot:welcome'),
+function getWelcomeMessage() {
+  return {
+    id: 'welcome',
+    role: 'assistant',
+    text: i18n.t('chatbot:welcome') || 'Hello! I am the Brilliant Hub admission assistant. How can I help you today?',
+  }
 }
 
 export function useChat() {
   const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState([WELCOME_MESSAGE])
+  const [isMinimized, setIsMinimized] = useState(false)
+  const [messages, setMessages] = useState([getWelcomeMessage()])
   const [isLoading, setIsLoading] = useState(false)
 
-  const open = useCallback(() => setIsOpen(true), [])
-  const close = useCallback(() => setIsOpen(false), [])
-  const toggle = useCallback(() => setIsOpen((prev) => !prev), [])
+  const open = useCallback(() => {
+    setIsOpen(true)
+    setIsMinimized(false)
+  }, [])
+  const close = useCallback(() => {
+    setIsOpen(false)
+    setIsMinimized(false)
+  }, [])
+  const toggle = useCallback(() => {
+    setIsOpen((prev) => !prev)
+    setIsMinimized(false)
+  }, [])
+  const minimize = useCallback(() => setIsMinimized(true), [])
+  const restore = useCallback(() => setIsMinimized(false), [])
 
   const sendMessage = useCallback(async (text) => {
     const trimmed = (text ?? '').trim()
@@ -27,28 +41,33 @@ export function useChat() {
     setIsLoading(true)
 
     try {
-      const answer = await askAssistant(trimmed)
+      const remoteAnswer = await askAssistant(trimmed)
+      const answer = remoteAnswer || getLocalAnswer(trimmed) || FALLBACK_MESSAGE
       setMessages((prev) => [
         ...prev,
         { id: `assistant-${Date.now()}`, role: 'assistant', text: answer },
       ])
     } catch {
+      const fallback = getLocalAnswer(trimmed) || FALLBACK_MESSAGE
       setMessages((prev) => [
         ...prev,
-        { id: `assistant-${Date.now()}`, role: 'assistant', text: FALLBACK_MESSAGE },
+        { id: `assistant-${Date.now()}`, role: 'assistant', text: fallback },
       ])
     } finally {
       setIsLoading(false)
     }
   }, [])
 
-  const clear = useCallback(() => setMessages([WELCOME_MESSAGE]), [])
+  const clear = useCallback(() => setMessages([getWelcomeMessage()]), [])
 
   return {
     isOpen,
+    isMinimized,
     open,
     close,
     toggle,
+    minimize,
+    restore,
     messages,
     isLoading,
     sendMessage,

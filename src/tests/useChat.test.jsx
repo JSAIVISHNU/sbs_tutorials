@@ -33,4 +33,27 @@ describe('useChat', () => {
     })
     expect(result.current.messages).toHaveLength(1)
   })
+
+  it('falls back to local answer when remote askAssistant returns null', async () => {
+    askAssistant.mockResolvedValueOnce(null)
+    const { result } = renderHook(() => useChat())
+    await act(async () => {
+      await result.current.sendMessage('What courses do you offer?')
+    })
+    expect(result.current.messages).toHaveLength(3)
+    expect(result.current.messages[2].text).toContain('Brilliant Hub offers:')
+  })
+
+  it('toggles minimize and restore', () => {
+    const { result } = renderHook(() => useChat())
+    expect(result.current.isMinimized).toBe(false)
+    act(() => {
+      result.current.minimize()
+    })
+    expect(result.current.isMinimized).toBe(true)
+    act(() => {
+      result.current.restore()
+    })
+    expect(result.current.isMinimized).toBe(false)
+  })
 })

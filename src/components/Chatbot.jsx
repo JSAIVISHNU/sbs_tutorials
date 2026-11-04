@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useChat } from '../hooks/useChat.js'
 import { ChatMessage } from './ai/ChatMessage.jsx'
 import { ChatInput } from './ai/ChatInput.jsx'
@@ -5,6 +6,13 @@ import { ChatSuggestions } from './ai/ChatSuggestions.jsx'
 
 export function Chatbot() {
   const chat = useChat()
+  const messagesEndRef = useRef(null)
+
+  useEffect(() => {
+    if (chat.isOpen && !chat.isMinimized) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [chat.messages, chat.isLoading, chat.isOpen, chat.isMinimized])
 
   return (
     <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2">
@@ -27,6 +35,7 @@ export function Chatbot() {
             {chat.isLoading ? (
               <p className="text-xs text-[#43474e]">Typing…</p>
             ) : null}
+            <div ref={messagesEndRef} />
           </div>
           <div className="border-t border-[#c3c6d0] p-3">
             <ChatSuggestions suggestions={chat.suggestedQuestions} onSelect={chat.sendMessage} disabled={chat.isLoading} />
