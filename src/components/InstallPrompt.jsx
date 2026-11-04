@@ -6,9 +6,7 @@ const SESSION_KEY = 'bh-desktop-mode-chosen'
 export function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
   const [show, setShow] = useState(false)
-  const [isIos, setIsIos] = useState(false)
   const [isStandalone, setIsStandalone] = useState(false)
-  const [showInstructions, setShowInstructions] = useState(false)
 
   useEffect(() => {
     const standalone =
@@ -18,19 +16,21 @@ export function InstallPrompt() {
     setIsStandalone(standalone)
     if (standalone) return
 
-    const ua = typeof window !== 'undefined' ? window.navigator.userAgent.toLowerCase() : ''
-    const ios = /iphone|ipad|ipod/.test(ua) && !window.MSStream
-    setIsIos(ios)
+    if (typeof window !== 'undefined' && window.deferredInstallPrompt) {
+      setDeferredPrompt(window.deferredInstallPrompt)
+    }
 
     const handler = (event) => {
       event.preventDefault()
+      if (typeof window !== 'undefined') {
+        window.deferredInstallPrompt = event
+      }
       setDeferredPrompt(event)
     }
     window.addEventListener('beforeinstallprompt', handler)
 
     const openListener = () => {
       setShow(true)
-      setShowInstructions(false)
     }
     window.addEventListener('open-install-prompt', openListener)
 
@@ -55,7 +55,6 @@ export function InstallPrompt() {
 
   const continueInDesktopMode = () => {
     setShow(false)
-    setShowInstructions(false)
     try {
       sessionStorage.setItem(SESSION_KEY, '1')
     } catch {
@@ -63,13 +62,52 @@ export function InstallPrompt() {
     }
   }
 
+  const downloadAppShortcut = () => {
+    const origin = typeof window !== 'undefined' ? window.location.origin : ''
+    const content = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Brilliant Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="${origin}/images/logo.png">
+  <meta http-equiv="refresh" content="0; url=${origin}/">
+  <script>window.location.replace("${origin}/");</script>
+</head>
+<body style="font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#f8f9ff;color:#03345d;">
+  <div style="text-align:center;padding:24px;">
+    <img src="${origin}/images/logo.png" width="96" height="96" alt="Brilliant Hub" style="object-fit:contain;margin-bottom:16px;">
+    <h2 style="margin:0 0 8px 0;font-size:24px;">Launching Brilliant Hub...</h2>
+    <p style="margin:0;font-size:14px;color:#43474e;">Uttarahalli • Bengaluru</p>
+    <p style="margin-top:20px;"><a href="${origin}/" style="color:#03345d;font-weight:600;text-decoration:underline;">Click here if not redirected automatically</a></p>
+  </div>
+</body>
+</html>`
+
+    const blob = new Blob([content], { type: 'text/html' })
+    const url = URL.createObjectURL(blob)
+    const anchor = document.createElement('a')
+    anchor.href = url
+    anchor.download = 'Brilliant-Hub.html'
+    document.body.appendChild(anchor)
+    anchor.click()
+    document.body.removeChild(anchor)
+    setTimeout(() => URL.revokeObjectURL(url), 1000)
+  }
+
   const handleDownloadApp = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt()
+    const promptEvent =
+      deferredPrompt || (typeof window !== 'undefined' ? window.deferredInstallPrompt : null)
+
+    if (promptEvent) {
       try {
-        await deferredPrompt.userChoice
+        promptEvent.prompt()
+        await promptEvent.userChoice
       } catch {
         // ignore
+      }
+      if (typeof window !== 'undefined') {
+        window.deferredInstallPrompt = null
       }
       setDeferredPrompt(null)
       setShow(false)
@@ -81,8 +119,14 @@ export function InstallPrompt() {
       return
     }
 
-    // If deferredPrompt is not directly available (iOS, desktop browser, etc.), display helpful instructions
-    setShowInstructions(true)
+    // Direct download shortcut on clicking for desktop / browsers without native prompt
+    downloadAppShortcut()
+    setShow(false)
+    try {
+      sessionStorage.setItem(SESSION_KEY, '1')
+    } catch {
+      // ignore
+    }
   }
 
   if (isStandalone || !show) return null
@@ -124,24 +168,6 @@ export function InstallPrompt() {
             Download as an app on your home screen for fast 1-tap offline access, or continue browsing in desktop mode.
           </p>
         </div>
-
-        {showInstructions ? (
-          <div className="mt-3 rounded-xl bg-[#eef4ff] p-3 text-xs leading-relaxed text-[#03345d] border border-[#c3c6d0]/40">
-            {isIos ? (
-              <p>
-                <strong>iOS Safari:</strong> Tap the <strong>Share</strong> button (
-                <span className="font-mono">⎋</span>) at the bottom of the screen, scroll down and tap{' '}
-                <strong>Add to Home Screen (+)</strong>.
-              </p>
-            ) : (
-              <p>
-                <strong>Desktop / Android:</strong> Look for the <strong>Install</strong> icon (
-                <span className="font-mono">⊕</span>) in your browser address bar or tap browser menu (⋮) →{' '}
-                <strong>Add to Home screen / Install app</strong>.
-              </p>
-            )}
-          </div>
-        ) : null}
 
         <div className="mt-5 flex flex-col sm:flex-row gap-2.5">
           <button
