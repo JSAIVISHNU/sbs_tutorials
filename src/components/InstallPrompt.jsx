@@ -265,39 +265,56 @@ export function InstallPrompt() {
 
         {/* Content */}
         {showIosSteps ? (
-          <div className="mt-4 flex flex-col gap-3 animate-fade-in">
-            <div className="rounded-2xl bg-amber-400/10 border border-[#fdc254] p-3.5 text-left">
-              <p className="font-['Plus_Jakarta_Sans'] text-[14px] font-bold text-[#fdc254] flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-[18px]">phone_iphone</span>
-                iPhone Home Screen Install
-              </p>
-              <p className="font-['Plus_Jakarta_Sans'] text-[12px] text-gray-300 mt-1">
-                Apple requires installing directly through Safari without using third-party apps:
+          <div className="mt-4 flex flex-col gap-3 animate-fade-in text-left">
+            <div className="rounded-2xl bg-[#02182c] border border-[#fdc254]/60 p-4">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[#fdc254] text-[22px]">add_to_home_screen</span>
+                <p className="font-['Plus_Jakarta_Sans'] text-[15px] font-bold text-white">
+                  Add to iPhone Home Screen
+                </p>
+              </div>
+              
+              <p className="font-['Plus_Jakarta_Sans'] text-[12px] text-gray-300 mt-2 leading-[18px]">
+                On iPhone, Apple requires installing web apps through Safari&apos;s menu (no data is shared with anyone):
               </p>
 
               <div className="mt-3 flex flex-col gap-2.5">
-                <div className="flex items-center gap-2.5 bg-black/30 p-2.5 rounded-xl border border-white/10">
-                  <span className="shrink-0 w-6 h-6 rounded-full bg-[#fdc254] text-[#011e38] font-bold text-xs flex items-center justify-center">1</span>
-                  <p className="font-['Plus_Jakarta_Sans'] text-[12px] text-white">
-                    Tap the <strong>Share</strong> button <span className="inline-block px-1.5 py-0.5 rounded bg-white/20 text-white font-mono text-[11px]">⎋</span> in Safari&apos;s bottom toolbar.
-                  </p>
+                <div className="flex items-start gap-2.5 bg-white/5 p-3 rounded-xl border border-white/10">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-[#fdc254] text-[#011e38] font-black text-xs flex items-center justify-center mt-0.5">1</span>
+                  <div className="flex-1">
+                    <p className="font-['Plus_Jakarta_Sans'] text-[13px] font-bold text-white">
+                      Tap the Action Button in Safari
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans'] text-[11px] text-gray-300 mt-0.5">
+                      Tap the icon <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded bg-white/20 text-[#fdc254] font-bold text-[12px]">⎋</span> at the very bottom center of Safari.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 bg-black/30 p-2.5 rounded-xl border border-white/10">
-                  <span className="shrink-0 w-6 h-6 rounded-full bg-[#fdc254] text-[#011e38] font-bold text-xs flex items-center justify-center">2</span>
-                  <p className="font-['Plus_Jakarta_Sans'] text-[12px] text-white">
-                    Scroll down and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong> <span className="inline-block px-1.5 py-0.5 rounded bg-white/20 text-white font-mono text-[11px]">⊞</span>.
-                  </p>
+                <div className="flex items-start gap-2.5 bg-white/5 p-3 rounded-xl border border-white/10">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-[#fdc254] text-[#011e38] font-black text-xs flex items-center justify-center mt-0.5">2</span>
+                  <div className="flex-1">
+                    <p className="font-['Plus_Jakarta_Sans'] text-[13px] font-bold text-white">
+                      Select &ldquo;Add to Home Screen&rdquo;
+                    </p>
+                    <p className="font-['Plus_Jakarta_Sans'] text-[11px] text-gray-300 mt-0.5">
+                      Scroll down slightly and tap <span className="text-[#fdc254] font-semibold">&ldquo;Add to Home Screen&rdquo; ⊞</span>, then tap <strong>&ldquo;Add&rdquo;</strong> at the top right.
+                    </p>
+                  </div>
                 </div>
+              </div>
+
+              <div className="mt-3 flex items-center justify-center gap-1.5 text-[#fdc254] text-[11px] font-bold animate-pulse">
+                <span>↓ Look at the bottom toolbar of Safari ↓</span>
               </div>
             </div>
 
             <button
               type="button"
               onClick={continueInDesktopMode}
-              className="mt-1 w-full rounded-xl bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] font-black uppercase tracking-wider text-[#4a2e00] transition-all shadow-lg"
+              className="mt-1 w-full rounded-xl bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] font-black uppercase tracking-wider text-[#4a2e00] transition-all shadow-lg active:scale-[0.99]"
             >
-              Got It, Open in Safari
+              Close &amp; Tap ⎋ at Bottom of Screen
             </button>
           </div>
         ) : (
