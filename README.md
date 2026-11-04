@@ -8,7 +8,18 @@ Responsive marketing and enquiry website for Brilliant Hub, Bengaluru.
 - Tailwind CSS
 - Supabase (PostgreSQL)
 - Vitest + React Testing Library + Playwright
-- Vercel deployment
+- Render / Vercel deployment
+
+## Deploy to Render
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/JSAIVISHNU/sbs_tutorials)
+
+Or manually on [Render Dashboard](https://dashboard.render.com/):
+1. Click **New +** → **Static Site**
+2. Connect repository **`JSAIVISHNU/sbs_tutorials`**
+3. Build Command: `npm install && npm run build`
+4. Publish Directory: `dist`
+5. Click **Create Static Site**
 
 ## Setup
 
