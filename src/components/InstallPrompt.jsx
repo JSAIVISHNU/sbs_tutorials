@@ -272,16 +272,30 @@ export function InstallPrompt() {
 
         {!showIosGuide && !showAndroidGuide ? (
           <>
-            <div className="mt-3">
-              <p className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[22px] text-[#161c24]">
-                How would you like to experience Brilliant Hub today?
+            <div className="mt-3 flex flex-col gap-2">
+              <p className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-bold text-[#03345d]">
+                Install Brilliant Hub on your Home Screen
               </p>
-              <p className="mt-1 font-['Plus_Jakarta_Sans'] text-[12px] leading-[18px] text-[#43474e]">
-                Download as an app on your home screen for fast 1-tap offline access, or continue browsing in desktop mode.
+              <p className="font-['Plus_Jakarta_Sans'] text-[12px] leading-[18px] text-[#43474e]">
+                Download as an app for 1-tap access on your phone or continue in desktop mode.
               </p>
+
+              {/* New Updates Coming Soon Badge */}
+              <div className="mt-1 p-3 rounded-xl bg-gradient-to-br from-[#02315d] to-[#011e38] text-white border border-[#fdc254]/40 shadow-inner flex flex-col gap-1.5">
+                <div className="flex items-center gap-1.5 text-[#fdc254] font-['Plus_Jakarta_Sans'] text-[11px] font-black uppercase tracking-wider">
+                  <span className="material-symbols-outlined text-[15px]">auto_awesome</span>
+                  <span>New Updates Coming Soon</span>
+                </div>
+                <p className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[16px] text-gray-200">
+                  Student &amp; Parent Portal arriving soon: <strong>Student Login</strong>, <strong>Daily Attendance Management</strong>, and <strong>Weekly Test Marks &amp; Progress Reports</strong>!
+                </p>
+                <span className="text-[10px] text-[#fdc254] font-bold">
+                  ★ Installing the app ensures you get new features automatically!
+                </span>
+              </div>
             </div>
 
-            <div className="mt-5 flex flex-col sm:flex-row gap-2.5">
+            <div className="mt-4 flex flex-col sm:flex-row gap-2.5">
               <button
                 type="button"
                 onClick={handleDownloadApp}

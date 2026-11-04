@@ -181,6 +181,15 @@ export function HeroSection() {
             </a>
           </div>
 
+          {/* Coming Soon Feature Notice */}
+          <div className="mt-2 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-[#fdc254]/30 flex flex-col sm:flex-row items-center gap-1.5 text-center text-xs text-gray-200">
+            <span className="inline-flex items-center gap-1 text-[#fdc254] font-black uppercase tracking-wider">
+              <span className="material-symbols-outlined text-[15px]">upcoming</span>
+              <span>New Updates Coming Soon:</span>
+            </span>
+            <span>Student &amp; Parent Portal (Login, Attendance Tracking &amp; Marks Management).</span>
+          </div>
+
         </div>
 
       </div>
