@@ -1,111 +1,89 @@
-const LOGO_URL = '/images/logo.png'
-
 export function Footer() {
   return (
-    <footer className="w-full bg-[#eef4ff] text-[#161c24] py-[3.5rem] shadow-[0_-4px_20px_-2px_rgba(36,75,117,0.04)]">
-      <div className="max-w-[1280px] mx-auto px-[1.25rem] lg:px-[3rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-[1.5rem]">
-        <div className="lg:col-span-4 flex flex-col gap-[0.75rem]">
-          <div className="flex items-center gap-[0.5rem]">
-            <img alt="Brilliant Hub brand logo" className="h-9 w-auto object-contain" src={LOGO_URL} />
-            <span className="font-['Source_Serif_4'] text-[22px] leading-[30px] text-[#03345d] font-bold">
-              Brilliant Hub
-            </span>
-          </div>
-          <p className="font-['Plus_Jakarta_Sans'] text-[15px] leading-[24px] text-[#43474e] pr-[1.25rem]">
-            A warm, friendly neighbourhood learning space in Uttarahalli nurturing academic excellence, artistic
-            expression, and analytical skills in every child.
-          </p>
-          <div className="flex items-center gap-[0.375rem] mt-[0.375rem] text-[#03345d]">
-            <span className="material-symbols-outlined text-[20px]">verified</span>
-            <span className="font-['Plus_Jakarta_Sans'] text-[12px] leading-[16px] font-semibold">
-              Affectionate Mentorship • Proven Results
-            </span>
-          </div>
-        </div>
-        <div className="lg:col-span-2 flex flex-col gap-[0.375rem]">
-          <h4 className="font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] text-[#03345d] font-semibold mb-[0.375rem]">
-            Quick Links
-          </h4>
-          <ul className="flex flex-col gap-[0.375rem] font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px] text-[#43474e]">
-            <li>
-              <a className="hover:text-[#03345d] transition-colors" href="#">
-                Home
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-[#03345d] transition-colors" href="#">
-                About Institute
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-[#03345d] transition-colors" href="#courses">
-                All Courses
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-[#03345d] transition-colors" href="#contact">
-                Contact Us
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-[#03345d] transition-colors" href="#enquiry-form">
-                Admissions &amp; Enquiry
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="lg:col-span-3 flex flex-col gap-[0.375rem]">
-          <h4 className="font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] text-[#03345d] font-semibold mb-[0.375rem]">
-            Academic Programs
-          </h4>
-          <ul className="flex flex-col gap-[0.375rem] font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px] text-[#43474e]">
-            <li className="flex items-center gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[16px] text-[#0284c7]">school</span>
-              <span>01 – School Tuition (LKG to 10th)</span>
-            </li>
-            <li className="flex items-center gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[16px] text-[#7c3aed]">music_note</span>
-              <span>02 – Music Classes (Shloka • Devaranama)</span>
-            </li>
-            <li className="flex items-center gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[16px] text-[#ea580c]">palette</span>
-              <span>03 – Drawing Classes (Art &amp; Creativity)</span>
-            </li>
-            <li className="flex items-center gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[16px] text-[#16a34a]">calculate</span>
-              <span>04 – Abacus Classes (Mental Maths)</span>
-            </li>
-          </ul>
-        </div>
-        <div className="lg:col-span-3 flex flex-col gap-[0.375rem]">
-          <h4 className="font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] text-[#03345d] font-semibold mb-[0.375rem]">
-            Reach Out
-          </h4>
-          <div className="flex flex-col gap-[0.75rem] font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px] text-[#43474e]">
-            <div className="flex items-start gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[18px] text-[#03345d] mt-0.5">location_on</span>
-              <span>Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru - 560061</span>
-            </div>
-            <div className="flex items-center gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[18px] text-[#03345d]">call</span>
+    <footer className="w-full bg-[#001426] text-white py-8 sm:py-12 border-t-2 border-[#fdc254]/40">
+      <div className="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8">
+        
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+          {/* Brand info */}
+          <div className="md:col-span-5 flex flex-col gap-3">
+            <div className="flex items-center gap-3">
+              <div className="bg-white p-1.5 rounded-xl border border-[#fdc254] shrink-0">
+                <img alt="Brilliant Hub Logo" className="h-9 w-auto object-contain" src="/images/logo.png" />
+              </div>
               <div className="flex flex-col">
-                <span>+91 9180473902</span>
-                <span>+91 8951412810</span>
+                <span className="font-['Source_Serif_4'] text-[20px] font-black text-white tracking-wider">
+                  BRILLIANT HUB
+                </span>
+                <span className="font-['Plus_Jakarta_Sans'] text-[11px] font-extrabold text-[#fdc254] uppercase tracking-wider">
+                  A BRIGHTER FUTURE STARTS HERE!
+                </span>
               </div>
             </div>
-            <div className="flex items-center gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[18px] text-[#03345d]">schedule</span>
-              <span>Mon – Sat: 9:00 AM – 7:30 PM</span>
+
+            <p className="font-['Plus_Jakarta_Sans'] text-[12px] font-black text-[#fdc254] uppercase tracking-wide mt-1">
+              FOUR SKILLS. ONE PLACE. ENDLESS POSSIBILITIES.
+            </p>
+
+            <div className="inline-flex items-center gap-1.5 text-xs text-gray-300 font-bold uppercase tracking-wider mt-1">
+              <span className="text-[#fdc254]">★</span>
+              <span>ADMISSIONS OPEN • LEARN • CREATE • DISCOVER • EXCEL</span>
+              <span className="text-[#fdc254]">★</span>
+            </div>
+          </div>
+
+          {/* 4 Programs from flyer */}
+          <div className="md:col-span-4 flex flex-col gap-2.5">
+            <h4 className="font-['Plus_Jakarta_Sans'] text-[13px] font-black text-[#fdc254] uppercase tracking-wider">
+              OUR FOUR PROGRAMS
+            </h4>
+            <ul className="flex flex-col gap-2 font-['Plus_Jakarta_Sans'] text-[13px] font-bold text-gray-300">
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#0284c7]" />
+                <span>01 – SCHOOL TUITION (LKG to 10th)</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#7c3aed]" />
+                <span>02 – MUSIC CLASSES (Shloka • Devaranama)</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#ea580c]" />
+                <span>03 – DRAWING CLASSES (Art &amp; Creativity)</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#16a34a]" />
+                <span>04 – ABACUS CLASSES (Mental Maths)</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Location & Hotlines */}
+          <div className="md:col-span-3 flex flex-col gap-2.5 font-['Plus_Jakarta_Sans'] text-[13px]">
+            <h4 className="font-['Plus_Jakarta_Sans'] text-[13px] font-black text-[#fdc254] uppercase tracking-wider">
+              CALL / WHATSAPP / VISIT
+            </h4>
+            <div className="flex flex-col gap-2 text-gray-300">
+              <div className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-[18px] text-[#fdc254] shrink-0 mt-0.5">location_on</span>
+                <span>Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru.</span>
+              </div>
+              <div className="flex items-center gap-2 font-bold text-white">
+                <span className="material-symbols-outlined text-[18px] text-[#25D366]">call</span>
+                <a href="tel:9180473902" className="hover:underline">9180473902</a>
+                <span>/</span>
+                <a href="https://wa.me/918951412810" target="_blank" rel="noopener noreferrer" className="hover:underline">89514 12810</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="max-w-[1280px] mx-auto px-[1.25rem] lg:px-[3rem] mt-[2rem] pt-[1.25rem] border-t border-[#c3c6d0]/30 flex flex-col sm:flex-row items-center justify-between text-[#43474e] font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px]">
-        <p>© 2025 Brilliant Hub. All rights reserved. Empowering young learners in Uttarahalli.</p>
-        <p className="mt-[0.375rem] sm:mt-0 font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] text-[#7d5700] font-medium">
-          Excellence in Academics &amp; Creative Arts
-        </p>
+
+        <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-2">
+          <span>&copy; {new Date().getFullYear()} Brilliant Hub. All rights reserved.</span>
+          <span className="font-bold text-[#fdc254]">Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru.</span>
+        </div>
+
       </div>
     </footer>
   )
 }
+
+export default Footer
