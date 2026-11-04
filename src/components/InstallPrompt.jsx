@@ -56,20 +56,11 @@ function isAppInstalledOrStandalone() {
 export function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
   const [show, setShow] = useState(false)
-  const [isIos, setIsIos] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-  const [showIosGuide, setShowIosGuide] = useState(false)
-  const [showAndroidGuide, setShowAndroidGuide] = useState(false)
+  const [isInstalling, setIsInstalling] = useState(false)
   const [isStandalone] = useState(() => isAppInstalledOrStandalone())
 
   useEffect(() => {
     if (isStandalone) return
-
-    const ua = typeof window !== 'undefined' ? window.navigator.userAgent.toLowerCase() : ''
-    const ios = /iphone|ipad|ipod/.test(ua) && !window.MSStream
-    const mobile = /android|iphone|ipad|ipod|mobile/.test(ua)
-    setIsIos(ios)
-    setIsMobile(mobile)
 
     if (typeof window !== 'undefined' && window.deferredInstallPrompt) {
       setDeferredPrompt(window.deferredInstallPrompt)
@@ -100,8 +91,6 @@ export function InstallPrompt() {
 
     const openListener = () => {
       setShow(true)
-      setShowIosGuide(false)
-      setShowAndroidGuide(false)
     }
     window.addEventListener('open-install-prompt', openListener)
 
@@ -110,7 +99,7 @@ export function InstallPrompt() {
     if (!chosen) {
       const timer = setTimeout(() => {
         setShow(true)
-      }, 700)
+      }, 900)
       return () => {
         clearTimeout(timer)
         window.removeEventListener('beforeinstallprompt', handler)
@@ -128,25 +117,11 @@ export function InstallPrompt() {
 
   const continueInDesktopMode = () => {
     setShow(false)
-    setShowIosGuide(false)
-    setShowAndroidGuide(false)
     try {
       sessionStorage.setItem(SESSION_KEY, '1')
     } catch {
       // ignore storage errors
     }
-  }
-
-  const markInstalledAndClose = () => {
-    try {
-      localStorage.setItem(INSTALLED_KEY, 'true')
-      sessionStorage.setItem(SESSION_KEY, '1')
-    } catch {
-      // ignore
-    }
-    setShow(false)
-    setShowIosGuide(false)
-    setShowAndroidGuide(false)
   }
 
   const downloadAppShortcut = () => {
@@ -161,12 +136,12 @@ export function InstallPrompt() {
   <meta http-equiv="refresh" content="0; url=${origin}/?source=pwa">
   <script>window.location.replace("${origin}/?source=pwa");</script>
 </head>
-<body style="font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#f8f9ff;color:#03345d;">
+<body style="font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#011e38;color:#ffffff;">
   <div style="text-align:center;padding:24px;">
     <img src="${origin}/images/logo.png" width="96" height="96" alt="Brilliant Hub" style="object-fit:contain;margin-bottom:16px;">
-    <h2 style="margin:0 0 8px 0;font-size:24px;">Launching Brilliant Hub...</h2>
-    <p style="margin:0;font-size:14px;color:#43474e;">Uttarahalli • Bengaluru</p>
-    <p style="margin-top:20px;"><a href="${origin}/?source=pwa" style="color:#03345d;font-weight:600;text-decoration:underline;">Click here if not redirected automatically</a></p>
+    <h2 style="margin:0 0 8px 0;font-size:24px;color:#fdc254;">Launching Brilliant Hub...</h2>
+    <p style="margin:0;font-size:14px;color:#cbd5e1;">Uttarahalli • Bengaluru</p>
+    <p style="margin-top:20px;"><a href="${origin}/?source=pwa" style="color:#fdc254;font-weight:600;text-decoration:underline;">Click here to open app</a></p>
   </div>
 </body>
 </html>`
@@ -183,15 +158,22 @@ export function InstallPrompt() {
   }
 
   const handleDownloadApp = async () => {
+    setIsInstalling(true)
+
+    // Wait slightly if prompt event is arriving
     let promptEvent =
       deferredPrompt || (typeof window !== 'undefined' ? window.deferredInstallPrompt : null)
 
-    if (!promptEvent && !isIos) {
-      await new Promise((resolve) => setTimeout(resolve, 250))
-      promptEvent =
-        deferredPrompt || (typeof window !== 'undefined' ? window.deferredInstallPrompt : null)
+    if (!promptEvent) {
+      for (let i = 0; i < 4; i++) {
+        await new Promise((resolve) => setTimeout(resolve, 250))
+        promptEvent =
+          deferredPrompt || (typeof window !== 'undefined' ? window.deferredInstallPrompt : null)
+        if (promptEvent) break
+      }
     }
 
+    // 1. Android Chrome / PWA native direct prompt
     if (promptEvent) {
       try {
         await promptEvent.prompt()
@@ -211,6 +193,7 @@ export function InstallPrompt() {
       }
       setDeferredPrompt(null)
       setShow(false)
+      setIsInstalling(false)
       try {
         sessionStorage.setItem(SESSION_KEY, '1')
       } catch {
@@ -219,169 +202,123 @@ export function InstallPrompt() {
       return
     }
 
-    if (isIos) {
-      setShowIosGuide(true)
+    // 2. iOS Safari direct share sheet trigger
+    const ua = typeof window !== 'undefined' ? window.navigator.userAgent.toLowerCase() : ''
+    const isIos = /iphone|ipad|ipod/.test(ua) && !window.MSStream
+
+    if (isIos && typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Brilliant Hub',
+          text: 'Brilliant Hub - Tuition, Music, Drawing & Abacus',
+          url: (typeof window !== 'undefined' ? window.location.origin : '') + '/?source=pwa',
+        })
+        try {
+          localStorage.setItem(INSTALLED_KEY, 'true')
+        } catch {
+          // ignore
+        }
+      } catch {
+        // user dismissed share sheet
+      }
+      setShow(false)
+      setIsInstalling(false)
       return
     }
 
-    if (isMobile) {
-      setShowAndroidGuide(true)
-      return
-    }
-
-    // On desktop browsers without native prompt, download the launcher shortcut
+    // 3. Fallback on any mobile or desktop: directly download launcher shortcut file with 1 click
     downloadAppShortcut()
-    setShow(false)
     try {
+      localStorage.setItem(INSTALLED_KEY, 'true')
       sessionStorage.setItem(SESSION_KEY, '1')
     } catch {
       // ignore
     }
+    setShow(false)
+    setIsInstalling(false)
   }
 
   if (isStandalone || !show) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-md rounded-2xl border border-[#c3c6d0]/60 bg-white p-5 shadow-2xl transition-all sm:p-6">
-        <div className="flex items-start justify-between gap-3">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div className="w-full max-w-md rounded-3xl border-2 border-[#fdc254] bg-[#012240] p-5 sm:p-6 shadow-2xl text-white relative overflow-hidden">
+        
+        {/* Header */}
+        <div className="flex items-start justify-between gap-3 pb-3 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <img
-              alt="Brilliant Hub app icon"
-              className="h-12 w-12 rounded-xl object-contain border border-[#c3c6d0]/40 p-1 bg-[#f8f9ff]"
-              src="/images/logo.png"
-            />
+            <div className="bg-white p-1 rounded-xl border border-[#fdc254] shrink-0">
+              <img
+                alt="Brilliant Hub app icon"
+                className="h-10 w-10 sm:h-12 sm:w-12 object-contain"
+                src="/images/logo.png"
+              />
+            </div>
             <div>
-              <h3 className="font-['Source_Serif_4'] text-[18px] leading-[24px] font-bold text-[#03345d]">
+              <h3 className="font-['Source_Serif_4'] text-[18px] sm:text-[20px] font-black text-white leading-tight">
                 Brilliant Hub
               </h3>
-              <p className="font-['Plus_Jakarta_Sans'] text-[12px] leading-[16px] text-[#7d5700] font-semibold uppercase tracking-wider">
+              <p className="font-['Plus_Jakarta_Sans'] text-[11px] font-bold text-[#fdc254] uppercase tracking-wider">
                 Uttarahalli • Bengaluru
               </p>
             </div>
           </div>
+          
           <button
             type="button"
             onClick={continueInDesktopMode}
-            className="rounded-full p-1 text-[#43474e] hover:bg-[#eef4ff] hover:text-[#03345d] transition-colors"
+            className="rounded-full w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
             aria-label="Close"
           >
             ✕
           </button>
         </div>
 
-        {!showIosGuide && !showAndroidGuide ? (
-          <>
-            <div className="mt-3 flex flex-col gap-2">
-              <p className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-bold text-[#03345d]">
-                Install Brilliant Hub on your Home Screen
-              </p>
-              <p className="font-['Plus_Jakarta_Sans'] text-[12px] leading-[18px] text-[#43474e]">
-                Download as an app for 1-tap access on your phone or continue in desktop mode.
-              </p>
+        {/* Content */}
+        <div className="mt-4 flex flex-col gap-2.5">
+          <p className="font-['Plus_Jakarta_Sans'] text-[15px] font-bold text-white leading-snug">
+            Download Brilliant Hub as an App
+          </p>
+          <p className="font-['Plus_Jakarta_Sans'] text-[12px] leading-[18px] text-gray-300">
+            Tap below to download directly to your mobile home screen for 1-tap fast access without typing website addresses.
+          </p>
 
-              {/* New Updates Coming Soon Badge */}
-              <div className="mt-1 p-3 rounded-xl bg-gradient-to-br from-[#02315d] to-[#011e38] text-white border border-[#fdc254]/40 shadow-inner flex flex-col gap-1.5">
-                <div className="flex items-center gap-1.5 text-[#fdc254] font-['Plus_Jakarta_Sans'] text-[11px] font-black uppercase tracking-wider">
-                  <span className="material-symbols-outlined text-[15px]">auto_awesome</span>
-                  <span>New Updates Coming Soon</span>
-                </div>
-                <p className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[16px] text-gray-200">
-                  Student &amp; Parent Portal arriving soon: <strong>Student Login</strong>, <strong>Daily Attendance Management</strong>, and <strong>Weekly Test Marks &amp; Progress Reports</strong>!
-                </p>
-                <span className="text-[10px] text-[#fdc254] font-bold">
-                  ★ Installing the app ensures you get new features automatically!
-                </span>
-              </div>
+          {/* New Updates Coming Soon Notice */}
+          <div className="mt-1 p-3 rounded-2xl bg-white/5 border border-[#fdc254]/40 flex flex-col gap-1 text-left">
+            <div className="flex items-center gap-1.5 text-[#fdc254] font-['Plus_Jakarta_Sans'] text-[11px] font-black uppercase tracking-wider">
+              <span className="material-symbols-outlined text-[15px]">upcoming</span>
+              <span>New Updates Coming Soon</span>
             </div>
-
-            <div className="mt-4 flex flex-col sm:flex-row gap-2.5">
-              <button
-                type="button"
-                onClick={handleDownloadApp}
-                className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#03345d] hover:bg-[#244b75] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] leading-[18px] font-bold text-white transition-all shadow-md active:scale-[0.99]"
-              >
-                <span className="material-symbols-outlined text-[18px]">install_mobile</span>
-                <span>Download as App</span>
-              </button>
-              <button
-                type="button"
-                onClick={continueInDesktopMode}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#c3c6d0] bg-[#f8f9ff] hover:bg-[#eef4ff] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] leading-[18px] font-semibold text-[#03345d] transition-colors"
-              >
-                <span className="material-symbols-outlined text-[18px]">desktop_windows</span>
-                <span>Continue in Desktop Mode</span>
-              </button>
-            </div>
-          </>
-        ) : null}
-
-        {showIosGuide ? (
-          <div className="mt-4 rounded-xl bg-[#eef4ff] p-4 border border-[#c3c6d0]/40 text-[#03345d]">
-            <h4 className="font-semibold text-sm flex items-center gap-1.5 mb-2">
-              <span className="material-symbols-outlined text-[18px]">add_to_home_screen</span>
-              Add to iPhone / iPad Home Screen
-            </h4>
-            <ol className="text-xs space-y-2 leading-relaxed text-[#161c24] list-decimal list-inside">
-              <li>
-                Tap the <strong className="text-[#03345d]">Share button (⎋)</strong> at the bottom of Safari.
-              </li>
-              <li>
-                Scroll down and tap <strong className="text-[#03345d]">&apos;Add to Home Screen&apos; (+)</strong>.
-              </li>
-              <li>Tap <strong className="text-[#03345d]">Add</strong> at the top right.</li>
-            </ol>
-            <div className="mt-4 flex gap-2">
-              <button
-                type="button"
-                onClick={markInstalledAndClose}
-                className="flex-1 rounded-lg bg-[#03345d] text-white py-2 px-3 text-xs font-semibold hover:bg-[#244b75] transition-colors"
-              >
-                Done, I&apos;ve Added It
-              </button>
-              <button
-                type="button"
-                onClick={continueInDesktopMode}
-                className="rounded-lg bg-white border border-[#c3c6d0] text-[#43474e] py-2 px-3 text-xs font-semibold hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-            </div>
+            <p className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[16px] text-gray-200">
+              Student &amp; Parent Portal: <strong>Student Login</strong>, <strong>Daily Attendance</strong>, and <strong>Weekly Test Marks &amp; Progress Reports</strong>!
+            </p>
           </div>
-        ) : null}
+        </div>
 
-        {showAndroidGuide ? (
-          <div className="mt-4 rounded-xl bg-[#eef4ff] p-4 border border-[#c3c6d0]/40 text-[#03345d]">
-            <h4 className="font-semibold text-sm flex items-center gap-1.5 mb-2">
-              <span className="material-symbols-outlined text-[18px]">add_to_home_screen</span>
-              Add to Android Home Screen
-            </h4>
-            <ol className="text-xs space-y-2 leading-relaxed text-[#161c24] list-decimal list-inside">
-              <li>
-                Tap your browser menu <strong className="text-[#03345d]">(⋮)</strong> at the top right.
-              </li>
-              <li>
-                Tap <strong className="text-[#03345d]">&apos;Install app&apos;</strong> or <strong className="text-[#03345d]">&apos;Add to Home screen&apos;</strong>.
-              </li>
-            </ol>
-            <div className="mt-4 flex gap-2">
-              <button
-                type="button"
-                onClick={markInstalledAndClose}
-                className="flex-1 rounded-lg bg-[#03345d] text-white py-2 px-3 text-xs font-semibold hover:bg-[#244b75] transition-colors"
-              >
-                Done, I&apos;ve Added It
-              </button>
-              <button
-                type="button"
-                onClick={continueInDesktopMode}
-                className="rounded-lg bg-white border border-[#c3c6d0] text-[#43474e] py-2 px-3 text-xs font-semibold hover:bg-gray-50"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        ) : null}
+        {/* 1-Tap Action Buttons */}
+        <div className="mt-5 flex flex-col sm:flex-row gap-2.5">
+          <button
+            type="button"
+            disabled={isInstalling}
+            onClick={handleDownloadApp}
+            className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] font-black uppercase tracking-wider text-[#4a2e00] transition-all shadow-lg active:scale-[0.99] disabled:opacity-75"
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              {isInstalling ? 'progress_activity' : 'install_mobile'}
+            </span>
+            <span>{isInstalling ? 'Installing...' : 'Download as App'}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={continueInDesktopMode}
+            className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-white/20 bg-white/10 hover:bg-white/20 px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] font-bold text-gray-200 transition-colors"
+          >
+            <span className="material-symbols-outlined text-[18px]">desktop_windows</span>
+            <span>Continue in Desktop</span>
+          </button>
+        </div>
+
       </div>
     </div>
   )
