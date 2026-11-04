@@ -13,10 +13,10 @@ const GRADES = [
 ]
 
 const COURSE_OPTIONS = [
-  { value: 'tuition', label: 'School Tuition' },
-  { value: 'music', label: 'Music Classes' },
-  { value: 'drawing', label: 'Drawing Classes' },
-  { value: 'abacus', label: 'Abacus Classes' },
+  { value: 'tuition', label: '01 – School Tuition (LKG to 10th)' },
+  { value: 'music', label: '02 – Music Classes (Shloka & Devaranama)' },
+  { value: 'drawing', label: '03 – Drawing Classes (Art & Creativity)' },
+  { value: 'abacus', label: '04 – Abacus Classes (Mental Maths)' },
 ]
 
 export function EnquiryForm() {

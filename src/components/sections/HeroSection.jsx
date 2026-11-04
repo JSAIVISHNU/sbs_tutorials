@@ -1,93 +1,278 @@
-const HERO_IMAGE =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuCtt8MhPuHlktCmW6fqMV4kUTslOi6oxfSPKkfN3sqhxkhNWe1zSXCZoXJwlP2vBL326JxVJu7lBVEw5NkzMyWER8G55Fy30lC3eddZa4YbUqedckZx3ul7V6F_knEn1ItDEQjzoOlUnXmeOEhpI8w8lCFkdYSv1ZrdEuteFYB8sMzDg73VyQcZCtGwqteYoaxwbJ-tHs2cIgpyZe17FUYStncY01yR-kfZGldIFu0'
+import { useState } from 'react'
 
 export function HeroSection() {
+  const [selectedPillar, setSelectedPillar] = useState('01')
+
+  const PILLARS = [
+    {
+      num: '01',
+      title: 'School Tuition',
+      sub: 'LKG to 10th Standard',
+      color: '#0284c7',
+      bgLight: 'bg-[#f0f9ff]',
+      borderColor: 'border-[#38bdf8]',
+      icon: 'school',
+      bullets: ['Personalised Attention', 'Homework & Exam Prep', 'Strong Academic Foundation'],
+    },
+    {
+      num: '02',
+      title: 'Music Classes',
+      sub: 'Shloka • Devaranama',
+      color: '#7c3aed',
+      bgLight: 'bg-[#faf5ff]',
+      borderColor: 'border-[#c084fc]',
+      icon: 'music_note',
+      bullets: ['Devotional Elements', 'Traditional Instruments', 'Vocal & Shloka Recitation'],
+    },
+    {
+      num: '03',
+      title: 'Drawing Classes',
+      sub: 'Learn Art & Creativity',
+      color: '#ea580c',
+      bgLight: 'bg-[#fff7ed]',
+      borderColor: 'border-[#fb923c]',
+      icon: 'palette',
+      bullets: ['Colouring & Artistic Colours', 'Fine Arts & Sketching', 'Freehand Imagination'],
+    },
+    {
+      num: '04',
+      title: 'Abacus Classes',
+      sub: 'Mental Maths & Calculation',
+      color: '#16a34a',
+      bgLight: 'bg-[#f0fdf4]',
+      borderColor: 'border-[#4ade80]',
+      icon: 'calculate',
+      bullets: ['Mental Maths & Speed', 'Photographic Memory', 'Enduring Math Confidence'],
+    },
+  ]
+
+  const activePillar = PILLARS.find((p) => p.num === selectedPillar) || PILLARS[0]
+
   return (
-    <section className="relative w-full overflow-hidden bg-[#f8f9ff] py-[2rem] lg:py-[3.5rem]">
-      <div className="max-w-[1280px] mx-auto px-[1.25rem] lg:px-[3rem]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[1.5rem] items-center">
-          <div className="lg:col-span-6 flex flex-col items-start gap-[1.25rem]">
-            <div className="inline-flex items-center gap-[0.375rem] px-[1.25rem] py-[0.375rem] rounded-full bg-[#d5e7dd] text-[#03345d] shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#fdc254] animate-pulse" />
-              <span className="font-['Plus_Jakarta_Sans'] text-[12px] leading-[16px] font-bold tracking-[0.02em] uppercase">
-                Admissions Open 2025
-              </span>
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#eaf2fb] via-[#f8faff] to-white py-[2.5rem] lg:py-[4rem]">
+      {/* Decorative radial glows */}
+      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-96 w-full max-w-7xl bg-[#fdc254]/20 blur-3xl rounded-full" />
+      <div className="pointer-events-none absolute top-1/2 -right-32 h-80 w-80 bg-[#0284c7]/10 blur-3xl rounded-full" />
+
+      <div className="max-w-[1280px] mx-auto px-[1.25rem] lg:px-[3rem] relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[2rem] lg:gap-[3rem] items-center">
+          
+          {/* Left Column: Pamphlet Style Branding & Headline */}
+          <div className="lg:col-span-7 flex flex-col items-start gap-[1.25rem]">
+            
+            {/* Admissions Open Golden Ribbon Banner */}
+            <div className="flex flex-col gap-1.5 items-start">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#fdc254] via-[#f59e0b] to-[#fdc254] text-[#5c3e00] font-['Plus_Jakarta_Sans'] text-[12px] sm:text-[13px] font-black tracking-wider uppercase shadow-sm border border-[#eab308]">
+                <span>★</span>
+                <span>ADMISSIONS OPEN</span>
+                <span>★</span>
+              </div>
+              <div className="inline-flex items-center gap-2 font-['Plus_Jakarta_Sans'] text-[11px] sm:text-[12px] font-extrabold tracking-[0.1em] text-[#03345d] uppercase">
+                <span>LEARN</span>
+                <span className="text-[#fdc254]">•</span>
+                <span>CREATE</span>
+                <span className="text-[#fdc254]">•</span>
+                <span>DISCOVER</span>
+                <span className="text-[#fdc254]">•</span>
+                <span>EXCEL</span>
+              </div>
             </div>
-            <h1 className="font-['Source_Serif_4'] text-[30px] lg:text-[56px] leading-[38px] lg:leading-[64px] tracking-[-0.01em] lg:tracking-[-0.02em] font-semibold text-[#03345d]">
-              Learning Today,{' '}
-              <br />
-              <span className="relative inline-block text-[#7d5700]">
-                Building a Brighter
+
+            {/* Main Headline */}
+            <h1 className="font-['Source_Serif_4'] text-[36px] sm:text-[50px] lg:text-[62px] leading-[42px] sm:leading-[56px] lg:leading-[68px] font-bold text-[#03345d] tracking-tight">
+              A Brighter Future{' '}
+              <span className="relative inline-block text-[#b45309]">
+                Starts Here!
                 <svg
-                  className="absolute -bottom-2 left-0 w-full h-3 text-[#ffdeaa] fill-current -z-10"
+                  className="absolute -bottom-2 left-0 w-full h-3 text-[#fde047] fill-current -z-10"
                   preserveAspectRatio="none"
                   viewBox="0 0 200 12"
                 >
                   <path d="M0,7 Q50,0 100,6 T200,8 L200,12 L0,12 Z" />
                 </svg>
-              </span>{' '}
-              Tomorrow
+              </span>
             </h1>
-            <p className="font-['Plus_Jakarta_Sans'] text-[17px] leading-[28px] text-[#43474e] max-w-xl">
-              A welcoming neighbourhood place where children learn, explore their creativity, and grow with intimate
-              personal attention in a reassuring home-learning setup.
+
+            {/* Slogan */}
+            <p className="font-['Plus_Jakarta_Sans'] text-[18px] sm:text-[22px] font-extrabold text-[#03345d] tracking-tight">
+              FOUR SKILLS. ONE PLACE. ENDLESS POSSIBILITIES.
             </p>
-            <div className="flex flex-wrap items-center gap-[0.75rem] pt-[0.375rem] w-full sm:w-auto">
+
+            <p className="font-['Plus_Jakarta_Sans'] text-[15px] sm:text-[16px] leading-[26px] text-[#43474e] max-w-xl">
+              A comprehensive neighbourhood learning centre providing personalized school tuition, traditional music,
+              creative fine arts, and speed mental maths in Uttarahalli, Bengaluru.
+            </p>
+
+            {/* The 4 Interactive Skill Badges (01 to 04) */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full pt-1">
+              {PILLARS.map((p) => {
+                const isActive = p.num === selectedPillar
+                return (
+                  <button
+                    key={p.num}
+                    type="button"
+                    onClick={() => setSelectedPillar(p.num)}
+                    className={`flex flex-col text-left p-2.5 rounded-xl transition-all cursor-pointer border ${
+                      isActive
+                        ? 'bg-white shadow-md ring-2 ring-offset-1'
+                        : 'bg-white/80 hover:bg-white shadow-xs'
+                    }`}
+                    style={{
+                      borderColor: p.borderColor.replace('border-', ''),
+                      ringColor: isActive ? p.color : 'transparent',
+                    }}
+                  >
+                    <span className="font-['Plus_Jakarta_Sans'] text-[11px] font-black" style={{ color: p.color }}>
+                      {p.num} {p.title.split(' ')[0].toUpperCase()}
+                    </span>
+                    <span className="text-[12px] font-bold text-[#03345d] leading-tight truncate">
+                      {p.sub}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-[0.75rem] pt-[0.5rem] w-full sm:w-auto">
               <a
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-[0.375rem] bg-[#03345d] text-white hover:bg-[#244b75] px-[2rem] py-[0.75rem] rounded-lg font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold transition-all shadow-[0_4px_20px_-2px_rgba(36,75,117,0.18)]"
-                href="#enquiry-form"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-[1.75rem] py-[0.875rem] rounded-xl font-['Plus_Jakarta_Sans'] text-[15px] font-bold transition-all shadow-md active:scale-[0.99]"
+                href="https://wa.me/918951412810?text=Hello%20Brilliant%20Hub,%20I%20would%20like%20to%20enquire%20about%20admissions."
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <span>Enquire Now</span>
-                <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                <span className="material-symbols-outlined text-[20px]">chat</span>
+                <span>Enquire on WhatsApp</span>
               </a>
               <a
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-[0.375rem] bg-white text-[#03345d] hover:bg-[#eef4ff] px-[2rem] py-[0.75rem] rounded-lg font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold transition-all shadow-sm"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#03345d] text-white hover:bg-[#244b75] px-[1.75rem] py-[0.875rem] rounded-xl font-['Plus_Jakarta_Sans'] text-[15px] font-semibold transition-all shadow-md"
                 href="#courses"
               >
-                <span>Explore Our Courses</span>
+                <span>Explore All 4 Courses</span>
+                <span className="material-symbols-outlined text-[18px]">arrow_downward</span>
               </a>
             </div>
-            <div className="w-full mt-[1.25rem] pt-[1.25rem] flex flex-col gap-[0.375rem]">
-              <div className="flex flex-wrap items-center gap-[0.375rem] font-['Plus_Jakarta_Sans'] text-[12px] leading-[16px] text-[#03345d]">
-                <span className="px-[0.75rem] py-1 bg-[#eef4ff] rounded-md">School Tuition</span>
-                <span className="text-[#c3c6d0]">•</span>
-                <span className="px-[0.75rem] py-1 bg-[#eef4ff] rounded-md">Music</span>
-                <span className="text-[#c3c6d0]">•</span>
-                <span className="px-[0.75rem] py-1 bg-[#eef4ff] rounded-md">Drawing</span>
-                <span className="text-[#c3c6d0]">•</span>
-                <span className="px-[0.75rem] py-1 bg-[#eef4ff] rounded-md">Abacus</span>
+
+            {/* Pamphlet Contact Pill */}
+            <div className="w-full pt-2 flex flex-col sm:flex-row sm:items-center gap-2 text-[#43474e] font-['Plus_Jakarta_Sans'] text-[13px]">
+              <div className="inline-flex items-center gap-1.5 font-bold text-[#03345d] bg-[#fdc254]/25 px-3 py-1.5 rounded-lg border border-[#fdc254]">
+                <span className="material-symbols-outlined text-[#16a34a] text-[18px]">call</span>
+                <span className="uppercase text-[11px] tracking-wider text-[#7d5700]">Hotlines:</span>
+                <a href="tel:9180473902" className="hover:underline">080-473902</a>
+                <span>/</span>
+                <a href="tel:+918951412810" className="hover:underline">+91 89514 12810</a>
               </div>
-              <div className="flex items-center gap-[0.375rem] text-[#43474e] font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px] pt-1">
-                <span className="material-symbols-outlined text-[#7d5700] text-[18px]">location_on</span>
-                <span>Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru</span>
-              </div>
-            </div>
-          </div>
-          <div className="lg:col-span-6 relative mt-[1.25rem] lg:mt-0">
-            <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden shadow-[0_12px_32px_-4px_rgba(36,75,117,0.15)] bg-[#e3e8f3]">
-              <img
-                alt="Friendly lady teacher in blue kurti mentoring elementary school children around a wooden study table at Brilliant Hub Uttarahalli"
-                className="w-full h-full object-cover"
-                src={HERO_IMAGE}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#03345d]/30 via-transparent to-transparent" />
-            </div>
-            <div className="absolute -bottom-4 left-4 sm:left-8 bg-white/95 backdrop-blur-md px-[1.25rem] py-[0.75rem] rounded-xl shadow-[0_8px_24px_-4px_rgba(36,75,117,0.12)] flex items-center gap-[0.75rem] max-w-[90%]">
-              <div className="w-10 h-10 rounded-full bg-[#ffdeaa] flex items-center justify-center flex-shrink-0 text-[#725000]">
-                <span className="material-symbols-outlined text-[20px]">cottage</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold text-[#244b75]">
-                  Cosy Home Learning Studio
-                </span>
-                <span className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] text-[#43474e]">
-                  Personal Attention • Calm Study Space
-                </span>
+              <span className="hidden sm:inline text-gray-300">•</span>
+              <div className="inline-flex items-center gap-1 text-[#03345d] font-semibold">
+                <span className="material-symbols-outlined text-[#ea580c] text-[18px]">pin_drop</span>
+                <span>Near Vishal Mega Mart, Uttarahalli</span>
               </div>
             </div>
           </div>
+
+          {/* Right Column: Pamphlet Theme Feature Card (Pure Native UI) */}
+          <div className="lg:col-span-5 relative flex justify-center mt-2 lg:mt-0">
+            <div className="w-full max-w-[440px] rounded-3xl bg-gradient-to-b from-[#03345d] via-[#02244a] to-[#01162d] p-6 sm:p-7 text-white shadow-[0_20px_50px_rgba(3,52,93,0.3)] border-2 border-[#fdc254] relative overflow-hidden">
+              
+              {/* Gold Corner Ribbon */}
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#fdc254] to-[#f59e0b] text-[#5c3e00] flex items-center justify-center font-bold shadow-sm">
+                    <span className="material-symbols-outlined text-[24px]">school</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-['Source_Serif_4'] text-[18px] font-bold text-[#fdc254] leading-tight">
+                      BRILLIANT HUB
+                    </span>
+                    <span className="font-['Plus_Jakarta_Sans'] text-[10px] tracking-widest uppercase text-gray-300">
+                      Uttarahalli • Bengaluru
+                    </span>
+                  </div>
+                </div>
+                <div className="px-2.5 py-1 rounded-full bg-[#fdc254]/20 border border-[#fdc254]/60 text-[#fdc254] text-[10px] font-black uppercase tracking-wider">
+                  ★ ADMISSIONS OPEN ★
+                </div>
+              </div>
+
+              {/* Dynamic Feature Preview matching selected pillar */}
+              <div className="my-5 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="px-2.5 py-0.5 rounded-lg text-white font-['Source_Serif_4'] font-black text-sm"
+                      style={{ backgroundColor: activePillar.color }}
+                    >
+                      {activePillar.num}
+                    </span>
+                    <h2 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-white">
+                      {activePillar.title}
+                    </h2>
+                  </div>
+                  <span className="material-symbols-outlined text-[24px]" style={{ color: activePillar.color }}>
+                    {activePillar.icon}
+                  </span>
+                </div>
+
+                <p className="font-['Plus_Jakarta_Sans'] text-xs font-bold uppercase tracking-wider text-[#fdc254]">
+                  {activePillar.sub}
+                </p>
+
+                <ul className="flex flex-col gap-2 pt-2 border-t border-white/10">
+                  {activePillar.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-center gap-2 text-[13px] text-gray-200">
+                      <span className="material-symbols-outlined text-[16px]" style={{ color: activePillar.color }}>
+                        check_circle
+                      </span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* 4 Mini Pills to switch */}
+              <div className="grid grid-cols-4 gap-1.5 pb-4">
+                {PILLARS.map((p) => (
+                  <button
+                    key={p.num}
+                    type="button"
+                    onClick={() => setSelectedPillar(p.num)}
+                    className={`py-2 px-1 rounded-lg text-center font-bold text-[11px] transition-all cursor-pointer ${
+                      p.num === selectedPillar
+                        ? 'text-white shadow-sm ring-1 ring-white'
+                        : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                    }`}
+                    style={{
+                      backgroundColor: p.num === selectedPillar ? p.color : undefined,
+                    }}
+                  >
+                    {p.num}
+                  </button>
+                ))}
+              </div>
+
+              {/* Bottom Hotlines & Action inside card */}
+              <div className="pt-4 border-t border-white/10 flex flex-col gap-2">
+                <div className="text-center font-['Plus_Jakarta_Sans'] text-[11px] font-extrabold text-[#fdc254] tracking-wider uppercase">
+                  Four Skills • One Place • Endless Possibilities
+                </div>
+                <a
+                  href={`https://wa.me/918951412810?text=Hello%20Brilliant%20Hub,%20I%20would%20like%20to%20enquire%20about%20${encodeURIComponent(activePillar.title)}.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-['Plus_Jakarta_Sans'] text-[13px] font-bold text-[#5c3e00] bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] transition-all shadow-md active:scale-[0.99]"
+                >
+                  <span className="material-symbols-outlined text-[18px]">chat</span>
+                  <span>Enquire for {activePillar.title}</span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
   )
 }
+
+export default HeroSection

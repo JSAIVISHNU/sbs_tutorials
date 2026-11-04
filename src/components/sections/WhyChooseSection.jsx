@@ -1,130 +1,135 @@
 const FEATURES = [
   {
     icon: 'volunteer_activism',
-    bg: 'bg-[#ffdeaa]/40',
-    color: 'text-[#7d5700]',
-    title: 'Personal Attention',
-    description: 'Give every learner the opportunity to receive individual attention and encouragement.',
-    badge: 'Focused batches · Guided mentoring',
-  },
-  {
-    icon: 'cottage',
-    bg: 'bg-[#fdc254]/30',
-    color: 'text-[#725000]',
-    title: 'Comfortable Learning Space',
-    description: 'A friendly and welcoming environment where children can feel comfortable while learning.',
-    badge: 'Calm atmosphere · Pressure-free',
+    bg: 'bg-[#0284c7]/10',
+    color: 'text-[#0284c7]',
+    title: 'Personalised Attention',
+    description: 'Focused small batches with individual attention ensuring no child gets left behind.',
+    badge: 'Focused Batches · Caring Mentors',
   },
   {
     icon: 'auto_stories',
-    bg: 'bg-[#d2e4ff]/50',
-    color: 'text-[#03345d]',
-    title: 'Multiple Learning Opportunities',
-    description: 'Explore academics, music, drawing and abacus learning in one place.',
-    badge: 'All 4 programs under one roof',
+    bg: 'bg-[#7c3aed]/10',
+    color: 'text-[#7c3aed]',
+    title: 'Four Skills Under One Roof',
+    description: 'School Tuition, Music, Drawing, and Abacus in one safe, convenient Uttarahalli hub.',
+    badge: 'Academics + Arts + Mental Math',
   },
   {
-    icon: 'palette',
-    bg: 'bg-[#d5e7dd]/60',
-    color: 'text-[#273630]',
-    title: 'Learning Through Creativity',
-    description: 'Encourage curiosity, creative thinking and the joy of discovering new skills.',
-    badge: 'Imagination & cognitive growth',
+    icon: 'menu_book',
+    bg: 'bg-[#ea580c]/10',
+    color: 'text-[#ea580c]',
+    title: 'Homework & Exam Prep',
+    description: 'Systematic syllabus coverage, regular practice tests, and daily homework support.',
+    badge: 'CBSE · ICSE · State Board',
+  },
+  {
+    icon: 'calculate',
+    bg: 'bg-[#16a34a]/10',
+    color: 'text-[#16a34a]',
+    title: 'Cognitive & Creative Growth',
+    description: 'Music chanting, artistic expression, and abacus speed math sharpening memory and focus.',
+    badge: 'Enduring Confidence & Speed',
   },
 ]
 
 export function WhyChooseSection() {
   return (
-    <section className="relative w-full py-[3.5rem] overflow-hidden bg-[#f8f9ff]">
-      <div className="pointer-events-none absolute -top-32 left-1/4 h-96 w-96 rounded-full bg-[#ffdeaa]/30 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 right-10 h-80 w-80 rounded-full bg-[#d5e7dd]/40 blur-3xl" />
+    <section className="relative w-full py-[3.5rem] lg:py-[4.5rem] overflow-hidden bg-[#f8faff]">
+      <div className="pointer-events-none absolute -top-32 left-1/4 h-96 w-96 rounded-full bg-[#fdc254]/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 right-10 h-80 w-80 rounded-full bg-[#0284c7]/10 blur-3xl" />
+
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-[3.5rem]">
-          <div className="inline-flex items-center gap-2 px-[0.875rem] py-[0.375rem] rounded-full bg-[#d5e7dd] text-[#0f1e19] mb-[1.25rem] shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-[#03345d] animate-pulse" />
-            <span className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] uppercase tracking-[0.04em] font-semibold text-[#03345d]">
-              WHY Brilliant Hub
+        
+        {/* Section Header */}
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-[3rem]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fdc254]/30 border border-[#fdc254] text-[#7d5700] mb-3">
+            <span className="font-['Plus_Jakarta_Sans'] text-[12px] font-extrabold uppercase tracking-wider">
+              ★ WHY PARENTS CHOOSE BRILLIANT HUB ★
             </span>
           </div>
-          <h2 className="font-['Source_Serif_4'] text-[38px] lg:text-[56px] leading-[46px] lg:leading-[64px] tracking-[-0.01em] lg:tracking-[-0.02em] font-semibold text-[#03345d] mb-[0.75rem]">
+
+          <h2 className="font-['Source_Serif_4'] text-[32px] lg:text-[46px] leading-[40px] lg:leading-[54px] font-bold text-[#03345d] mb-3">
             Learning That Feels{' '}
-            <span className="italic font-['Source_Serif_4'] text-[#7d5700] font-normal underline decoration-[#fdc254] decoration-wavy decoration-2 underline-offset-8">
-              Personal
+            <span className="italic font-['Source_Serif_4'] text-[#b45309] font-normal underline decoration-[#fdc254] decoration-2 underline-offset-8">
+              Personal &amp; Inspiring
             </span>
           </h2>
-          <p className="font-['Plus_Jakarta_Sans'] text-[17px] leading-[28px] text-[#43474e] max-w-2xl">
-            We believe every child learns differently. Our focus is to create a welcoming space where children can learn,
-            explore, and grow with confidence.
+
+          <p className="font-['Plus_Jakarta_Sans'] text-[16px] leading-[26px] text-[#43474e] max-w-2xl">
+            We provide an affectionate, supportive study setup where children can ask questions without hesitation,
+            develop a love for learning, and excel in every aspect of life.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[1.5rem] mb-[3.5rem]">
+
+        {/* 4 Feature Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[1.5rem] mb-[3rem]">
           {FEATURES.map((feature) => (
             <div
               key={feature.title}
-              className="group flex flex-col justify-between h-full bg-white rounded-2xl p-[1.5rem] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 relative"
+              className="group flex flex-col justify-between h-full bg-white rounded-2xl p-[1.5rem] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
             >
-              <div className="absolute top-0 left-6 right-6 h-1 bg-[#fdc254]/40 rounded-full" />
               <div>
                 <div
                   className={`w-14 h-14 rounded-2xl ${feature.bg} flex items-center justify-center ${feature.color} mb-[1.25rem] group-hover:scale-105 transition-transform duration-300`}
                 >
-                  <span
-                    className="material-symbols-outlined text-[28px]"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    {feature.icon}
-                  </span>
+                  <span className="material-symbols-outlined text-[28px]">{feature.icon}</span>
                 </div>
-                <h3 className="font-['Plus_Jakarta_Sans'] text-[20px] leading-[28px] text-[#03345d] font-bold mb-[0.375rem]">
+                <h3 className="font-['Plus_Jakarta_Sans'] text-[18px] leading-[24px] text-[#03345d] font-bold mb-2">
                   {feature.title}
                 </h3>
-                <p className="font-['Plus_Jakarta_Sans'] text-[15px] leading-[24px] text-[#43474e]">
+                <p className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[22px] text-[#43474e]">
                   {feature.description}
                 </p>
               </div>
-              <div className="mt-[2rem] pt-[0.375rem]">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#eef4ff] text-[#43474e] font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#7d5700]" />
+
+              <div className="pt-4 mt-3 border-t border-gray-100">
+                <span className="inline-flex items-center gap-1 font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] text-[#7d5700] font-bold uppercase tracking-wider">
+                  <span className="material-symbols-outlined text-[14px]">star</span>
                   {feature.badge}
                 </span>
               </div>
             </div>
           ))}
         </div>
-        <div className="w-full bg-[#eef4ff] rounded-2xl p-[1.25rem] md:p-[1.5rem] shadow-sm flex flex-col lg:flex-row items-center justify-between gap-[1.25rem]">
-          <div className="flex items-center gap-[1.25rem]">
-            <div className="hidden sm:flex w-12 h-12 rounded-xl bg-white items-center justify-center text-[#03345d] shrink-0 shadow-sm">
-              <span className="material-symbols-outlined text-[24px]">pin_drop</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[14px] uppercase tracking-[0.04em] text-[#7d5700] font-semibold">
-                Uttarahalli Neighbourhood Centre
-              </span>
-              <p className="font-['Source_Serif_4'] text-[22px] leading-[30px] text-[#03345d] font-semibold">
-                A welcoming neighbourhood space in Uttarahalli where young minds blossom with patient care.
-              </p>
-            </div>
+
+        {/* Golden Ribbon Banner matching flyer bottom */}
+        <div className="rounded-2xl bg-gradient-to-r from-[#03345d] via-[#02244a] to-[#03345d] p-6 lg:p-8 text-white shadow-xl border-2 border-[#fdc254] flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col text-center lg:text-left">
+            <span className="font-['Plus_Jakarta_Sans'] text-[12px] font-extrabold text-[#fdc254] uppercase tracking-wider">
+              FOUR SKILLS • ONE PLACE • ENDLESS POSSIBILITIES
+            </span>
+            <h4 className="font-['Source_Serif_4'] text-[22px] sm:text-[26px] font-bold text-white mt-1">
+              Visit Brilliant Hub or Call Us Direct
+            </h4>
+            <p className="font-['Plus_Jakarta_Sans'] text-[14px] text-gray-300 mt-1">
+              Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru. Call or WhatsApp 9180473902 / 89514 12810.
+            </p>
           </div>
-          <div className="flex items-center gap-[0.75rem] shrink-0 w-full lg:w-auto justify-end">
+
+          <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
             <a
-              className="inline-flex items-center justify-center gap-2 bg-[#fdc254] hover:bg-[#ffdeaa] text-[#725000] font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold px-[1.25rem] py-[0.75rem] rounded-lg shadow-sm transition-all"
-              href="https://wa.me/918951412810"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="tel:+918951412810"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-['Plus_Jakarta_Sans'] text-[14px] font-bold transition-colors border border-white/20"
             >
-              <span className="material-symbols-outlined text-[20px]">chat</span>
-              <span>Reach Out to Us</span>
+              <span className="material-symbols-outlined text-[18px]">call</span>
+              <span>Call Us</span>
             </a>
             <a
-              className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-[#eef4ff] text-[#03345d] font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold px-[1.25rem] py-[0.75rem] rounded-lg transition-colors"
-              href="/contact.html"
+              href="https://wa.me/918951412810?text=Hello%20Brilliant%20Hub,%20I%20would%20like%20to%20enquire%20about%20admissions."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] text-[#5c3e00] font-['Plus_Jakarta_Sans'] text-[14px] font-black transition-all shadow-md active:scale-[0.99]"
             >
-              <span>Visit Centre</span>
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              <span className="material-symbols-outlined text-[18px]">chat</span>
+              <span>WhatsApp Admission Desk</span>
             </a>
           </div>
         </div>
+
       </div>
     </section>
   )
 }
+
+export default WhyChooseSection

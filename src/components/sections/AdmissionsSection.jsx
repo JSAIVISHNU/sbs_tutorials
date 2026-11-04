@@ -1,7 +1,8 @@
 import { useState } from 'react'
+import { submitEnquiry } from '../../services/enquiryService.js'
 
 export function AdmissionsSection() {
-  const [formState, setFormStateRaw] = useState('default')
+  const [formState, setFormState] = useState('default')
   const [parentName, setParentName] = useState('')
   const [phone, setPhone] = useState('')
   const [studentClass, setStudentClass] = useState('')
@@ -11,53 +12,50 @@ export function AdmissionsSection() {
   const [charCount, setCharCount] = useState(0)
   const [showErrors, setShowErrors] = useState(false)
 
-  function setFormState(state) {
-    // reset toolbar handled by class logic below
-    if (state === 'default') {
-      setParentName('')
-      setPhone('')
-      setStudentClass('')
-      setCourse('')
-      setMessage('')
-      setCharCount(0)
-      setShowErrors(false)
-    } else if (state === 'active') {
-      setParentName('Ramesh Venkatesh')
-      setPhone('9845012345')
-      setStudentClass('8th')
-      setCourse('tuition')
-      setMessage('')
-      setCharCount(0)
-      setShowErrors(false)
-    } else if (state === 'validation') {
-      setParentName('')
-      setPhone('9845')
-      setStudentClass('')
-      setCourse('')
-      setShowErrors(true)
-      setTimeout(() => setShowErrors(false), 5000)
-    } else if (state === 'submitting') {
-      setShowErrors(false)
-    }
-    setFormStateRaw(state)
-  }
-
-  function handleFormSubmit(e) {
+  async function handleFormSubmit(e) {
     e.preventDefault()
+
+    const cleanName = parentName.trim()
+    const cleanPhone = phone.replace(/\D/g, '')
+
+    if (!cleanName || cleanPhone.length < 10) {
+      setShowErrors(true)
+      return
+    }
+
+    setShowErrors(false)
     setFormState('submitting')
-    setTimeout(() => {
+
+    const selectedSlots = []
+    if (slots.morning) selectedSlots.push('Morning')
+    if (slots.evening) selectedSlots.push('Evening')
+    if (slots.weekend) selectedSlots.push('Weekend')
+
+    const extraNotes = [
+      message.trim(),
+      selectedSlots.length ? `Preferred Slots: ${selectedSlots.join(', ')}` : '',
+    ]
+      .filter(Boolean)
+      .join(' | ')
+
+    try {
+      await submitEnquiry({
+        parentName: cleanName,
+        phone: cleanPhone,
+        studentClass: studentClass || undefined,
+        course: course || 'General Enquiry',
+        message: extraNotes || undefined,
+      })
       setFormState('success')
-    }, 1200)
+    } catch {
+      // Even on error, show success so parent connects on WhatsApp
+      setFormState('success')
+    }
   }
 
   const isSubmitting = formState === 'submitting'
   const isSuccess = formState === 'success'
-  const showBanner = formState === 'validation'
-
-  const toolBtnClass = (s) =>
-    s === formState
-      ? 'px-2.5 py-1 rounded-lg text-[12px] font-semibold transition-all bg-navy-deep text-on-primary shadow-xs'
-      : 'px-2.5 py-1 rounded-lg text-[12px] font-semibold transition-all bg-surface-white text-on-surface hover:bg-canvas-ivory'
+  const showBanner = showErrors
 
   return (
     <div className="flex flex-col w-full">
@@ -204,22 +202,22 @@ export function AdmissionsSection() {
                     <span className="material-symbols-outlined text-[20px]">forum</span>
                   </div>
                 </div>
-                <a className="w-full inline-flex items-center justify-center gap-2 px-space-lg py-3 rounded-xl bg-navy-deep text-on-primary font-label-lg text-label-lg font-bold hover:bg-primary transition-all shadow-sm group" href="https://wa.me/9180473902" rel="noopener noreferrer" target="_blank">
+                <a className="w-full inline-flex items-center justify-center gap-2 px-space-lg py-3 rounded-xl bg-navy-deep text-on-primary font-label-lg text-label-lg font-bold hover:bg-primary transition-all shadow-sm group" href="https://wa.me/918951412810" rel="noopener noreferrer" target="_blank">
                   <span className="material-symbols-outlined text-[20px] text-accent-golden group-hover:scale-110 transition-transform">chat</span>
-                  <span>WhatsApp Us (+91 80473 902)</span>
+                  <span>WhatsApp Us (+91 89514 12810)</span>
                 </a>
                 <div className="grid grid-cols-2 gap-space-sm pt-space-xs">
-                  <a className="p-space-sm rounded-xl bg-surface-white text-navy-deep hover:bg-canvas-ivory transition-colors flex flex-col shadow-sm" href="tel:080473902">
+                  <a className="p-space-sm rounded-xl bg-surface-white text-navy-deep hover:bg-canvas-ivory transition-colors flex flex-col shadow-sm" href="tel:9180473902">
                     <span className="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[14px] text-secondary">call</span> Desk Line
+                      <span className="material-symbols-outlined text-[14px] text-secondary">call</span> Helpline
                     </span>
-                    <span className="font-label-lg text-label-lg font-bold mt-1">080-473902</span>
+                    <span className="font-label-lg text-label-lg font-bold mt-1">9180473902</span>
                   </a>
                   <a className="p-space-sm rounded-xl bg-surface-white text-navy-deep hover:bg-canvas-ivory transition-colors flex flex-col shadow-sm" href="tel:+918951412810">
                     <span className="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[14px] text-accent-golden">smartphone</span> Mobile / SMS
+                      <span className="material-symbols-outlined text-[14px] text-accent-golden">smartphone</span> Call / WhatsApp
                     </span>
-                    <span className="font-label-lg text-label-lg font-bold mt-1">+91 89514 12810</span>
+                    <span className="font-label-lg text-label-lg font-bold mt-1">89514 12810</span>
                   </a>
                 </div>
                 <div className="p-space-md rounded-xl bg-surface-white/70 text-on-surface font-body-sm text-body-sm flex flex-col gap-1">
@@ -260,20 +258,7 @@ export function AdmissionsSection() {
               </div>
             </div>
             <div className="lg:col-span-7 flex flex-col gap-space-md">
-              <div className="rounded-2xl bg-surface-container-high/60 p-space-sm shadow-sm flex flex-wrap items-center justify-between gap-space-xs">
-                <span className="font-label-sm text-label-sm font-bold text-on-surface-variant px-space-xs uppercase tracking-wider flex items-center gap-1">
-                  <span className="material-symbols-outlined text-[16px] text-primary">toggle_on</span>
-                  Interactive Preview:
-                </span>
-                <div className="flex flex-wrap items-center gap-1" id="state-buttons-container">
-                  <button className={toolBtnClass('default')} id="btn-state-default" onClick={() => setFormState('default')} type="button">Default</button>
-                  <button className={toolBtnClass('active')} id="btn-state-active" onClick={() => setFormState('active')} type="button">Active Input</button>
-                  <button className={toolBtnClass('validation')} id="btn-state-validation" onClick={() => setFormState('validation')} type="button">Validation Alert</button>
-                  <button className={toolBtnClass('submitting')} id="btn-state-submitting" onClick={() => setFormState('submitting')} type="button">Submitting</button>
-                  <button className={toolBtnClass('success')} id="btn-state-success" onClick={() => setFormState('success')} type="button">Success</button>
-                </div>
-              </div>
-              <div className="rounded-2xl bg-surface-white p-space-xl shadow-md relative overflow-hidden">
+              <div className="rounded-2xl bg-surface-white p-space-xl shadow-md relative overflow-hidden border border-outline-variant/30">
                 <div className="flex items-center justify-between pb-space-lg">
                   <div>
                     <span className="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Fast-Track Application</span>

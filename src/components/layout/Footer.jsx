@@ -60,20 +60,20 @@ export function Footer() {
           </h4>
           <ul className="flex flex-col gap-[0.375rem] font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px] text-[#43474e]">
             <li className="flex items-center gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[16px] text-[#03345d]">school</span>
-              <span>School Tuition (State • CBSE • ICSE)</span>
+              <span className="material-symbols-outlined text-[16px] text-[#0284c7]">school</span>
+              <span>01 – School Tuition (LKG to 10th)</span>
             </li>
             <li className="flex items-center gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[16px] text-[#03345d]">music_note</span>
-              <span>Carnatic &amp; Western Music</span>
+              <span className="material-symbols-outlined text-[16px] text-[#7c3aed]">music_note</span>
+              <span>02 – Music Classes (Shloka • Devaranama)</span>
             </li>
             <li className="flex items-center gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[16px] text-[#03345d]">palette</span>
-              <span>Drawing &amp; Creative Fine Arts</span>
+              <span className="material-symbols-outlined text-[16px] text-[#ea580c]">palette</span>
+              <span>03 – Drawing Classes (Art &amp; Creativity)</span>
             </li>
             <li className="flex items-center gap-[0.375rem]">
-              <span className="material-symbols-outlined text-[16px] text-[#03345d]">calculate</span>
-              <span>Mental Arithmetic &amp; Abacus</span>
+              <span className="material-symbols-outlined text-[16px] text-[#16a34a]">calculate</span>
+              <span>04 – Abacus Classes (Mental Maths)</span>
             </li>
           </ul>
         </div>

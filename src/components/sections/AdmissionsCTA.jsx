@@ -23,7 +23,7 @@ export function AdmissionsCTA() {
                 </h2>
                 <p className="font-['Plus_Jakarta_Sans'] text-[17px] leading-[28px] text-[#97bbec] max-w-xl">
                   Looking for a friendly place where your child can learn, explore and grow? Get in touch with Brilliant Hub
-                  TUTORIALS to know more about our learning programs.
+                  to know more about our learning programs.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 pt-1">
