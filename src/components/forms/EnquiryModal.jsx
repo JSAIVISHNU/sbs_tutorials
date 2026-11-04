@@ -126,7 +126,7 @@ export function EnquiryModal({ open, course, onClose }) {
                 </label>
                 <input
                   className="w-full px-3 py-2 rounded-lg bg-white font-['Plus_Jakarta_Sans'] text-[13px] leading-[20px] text-[#161c24] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#fdc254]"
-                  placeholder="+91 99165 22810"
+                  placeholder="+91 89514 12810"
                   required
                   type="tel"
                   value={phone}

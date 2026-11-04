@@ -29,7 +29,7 @@ You may answer ONLY using the approved institute information below.
 
 Institute: Brilliant Hub
 Location: Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru
-Contact: +91 9180473902, +91 9916522810
+Contact: +91 9180473902, +91 8951412810
 
 Courses:
 - School Tuition – LKG to 10th Standard, All Subjects

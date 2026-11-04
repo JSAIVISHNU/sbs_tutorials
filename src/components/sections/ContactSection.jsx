@@ -39,12 +39,12 @@ export function ContactSection() {
                 </a>
                 <a
                   className="flex-1 flex items-center justify-center gap-[0.375rem] bg-[#25D366] text-[#075E54] hover:bg-[#20ba5a] px-[1.25rem] py-[0.75rem] rounded-lg font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold transition-all shadow-sm"
-                  href="https://wa.me/919916522810"
+                  href="https://wa.me/918951412810"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <span className="material-symbols-outlined text-[18px]">chat</span>
-                  <span>WhatsApp (9916522810)</span>
+                  <span>WhatsApp (8951412810)</span>
                 </a>
               </div>
               <div className="relative w-full rounded-xl overflow-hidden bg-[#e3e8f3] p-[1.25rem] flex flex-col gap-[0.75rem]">

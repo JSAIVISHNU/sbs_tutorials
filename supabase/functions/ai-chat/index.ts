@@ -14,11 +14,11 @@ const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 10
 
 const FALLBACK_MESSAGE =
-  "Sorry, I don't have confirmed information about that. Please contact Brilliant Hub directly on 9180473902 or 9916522810."
+  "Sorry, I don't have confirmed information about that. Please contact Brilliant Hub directly on 9180473902 or 8951412810."
 
 const KNOWLEDGE_BASE = `Institute: Brilliant Hub
 Location: Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru
-Contact: 9180473902, 9916522810
+Contact: 9180473902, 8951412810
 
 Courses:
 - School Tuition: LKG to 10th Standard, All Subjects

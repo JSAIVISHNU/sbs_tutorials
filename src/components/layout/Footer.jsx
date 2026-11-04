@@ -90,7 +90,7 @@ export function Footer() {
               <span className="material-symbols-outlined text-[18px] text-[#03345d]">call</span>
               <div className="flex flex-col">
                 <span>+91 9180473902</span>
-                <span>+91 9916522810</span>
+                <span>+91 8951412810</span>
               </div>
             </div>
             <div className="flex items-center gap-[0.375rem]">

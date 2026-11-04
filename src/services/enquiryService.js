@@ -2,10 +2,10 @@
  * Brilliant Hub – Enquiry Service
  *
  * Formats admission enquiry details into a clean, polite message and opens
- * WhatsApp directly to the institute owner (+91 99165 22810).
+ * WhatsApp directly to the institute owner (+91 89514 12810).
  */
 
-export const DEFAULT_WHATSAPP_NUMBER = '919916522810'
+export const DEFAULT_WHATSAPP_NUMBER = '918951412810'
 
 /**
  * Builds a clean, polite WhatsApp Click-to-Chat URL containing the parent's enquiry details.

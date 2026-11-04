@@ -215,11 +215,11 @@ export function AdmissionsSection() {
                     </span>
                     <span className="font-label-lg text-label-lg font-bold mt-1">080-473902</span>
                   </a>
-                  <a className="p-space-sm rounded-xl bg-surface-white text-navy-deep hover:bg-canvas-ivory transition-colors flex flex-col shadow-sm" href="tel:+919916522810">
+                  <a className="p-space-sm rounded-xl bg-surface-white text-navy-deep hover:bg-canvas-ivory transition-colors flex flex-col shadow-sm" href="tel:+918951412810">
                     <span className="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
                       <span className="material-symbols-outlined text-[14px] text-accent-golden">smartphone</span> Mobile / SMS
                     </span>
-                    <span className="font-label-lg text-label-lg font-bold mt-1">+91 99165 22810</span>
+                    <span className="font-label-lg text-label-lg font-bold mt-1">+91 89514 12810</span>
                   </a>
                 </div>
                 <div className="p-space-md rounded-xl bg-surface-white/70 text-on-surface font-body-sm text-body-sm flex flex-col gap-1">

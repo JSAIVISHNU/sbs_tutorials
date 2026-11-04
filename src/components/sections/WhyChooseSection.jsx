@@ -108,7 +108,7 @@ export function WhyChooseSection() {
           <div className="flex items-center gap-[0.75rem] shrink-0 w-full lg:w-auto justify-end">
             <a
               className="inline-flex items-center justify-center gap-2 bg-[#fdc254] hover:bg-[#ffdeaa] text-[#725000] font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold px-[1.25rem] py-[0.75rem] rounded-lg shadow-sm transition-all"
-              href="https://wa.me/919916522810"
+              href="https://wa.me/918951412810"
               target="_blank"
               rel="noopener noreferrer"
             >

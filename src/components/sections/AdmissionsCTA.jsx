@@ -45,7 +45,7 @@ export function AdmissionsCTA() {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-[0.75rem] pt-[0.375rem]">
                 <a
                   className="inline-flex items-center justify-center gap-2.5 px-[1.5rem] py-[0.875rem] rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] font-bold transition-all shadow-md hover:shadow-lg active:scale-[0.99] group"
-                  href="https://wa.me/919916522810"
+                  href="https://wa.me/918951412810"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -56,7 +56,7 @@ export function AdmissionsCTA() {
                 </a>
                 <a
                   className="inline-flex items-center justify-center gap-2 px-[1.5rem] py-[0.875rem] rounded-xl bg-white/10 text-white hover:bg-white/20 font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] font-bold transition-all shadow-sm hover:shadow active:scale-[0.99] group"
-                  href="tel:+919916522810"
+                  href="tel:+918951412810"
                 >
                   <span className="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-12">call</span>
                   <span>Call Us Direct</span>
@@ -75,9 +75,9 @@ export function AdmissionsCTA() {
                 <span className="text-white/40">|</span>
                 <a
                   className="font-['Plus_Jakarta_Sans'] text-[18px] leading-[26px] font-bold text-white hover:text-[#fdc254] transition-colors underline decoration-[#fdc254]/40 underline-offset-4"
-                  href="tel:+919916522810"
+                  href="tel:+918951412810"
                 >
-                  +91 9916522810
+                  +91 8951412810
                 </a>
               </div>
             </div>
@@ -148,7 +148,7 @@ export function AdmissionsCTA() {
                 </div>
                 <a
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#eef4ff] hover:bg-[#e3e8f3] text-[#03345d] font-['Plus_Jakarta_Sans'] text-[12px] leading-[16px] font-semibold transition-colors"
-                  href="tel:+919916522810"
+                  href="tel:+918951412810"
                 >
                   <span>Connect</span>
                   <span className="material-symbols-outlined text-[14px]">arrow_forward</span>

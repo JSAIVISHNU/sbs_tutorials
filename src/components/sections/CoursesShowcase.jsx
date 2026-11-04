@@ -171,7 +171,7 @@ export function CoursesShowcase() {
             </span>
             <a
               className="inline-flex items-center gap-[0.375rem] bg-[#fdc254] hover:bg-[#ffdeaa] text-[#725000] px-[1.25rem] py-[0.75rem] rounded-lg font-['Plus_Jakarta_Sans'] text-[14px] leading-[20px] font-semibold transition-all shadow-sm group"
-              href="https://wa.me/919916522810?text=Hello%20Brilliant%20Hub,%20I%20would%20like%20to%20enquire%20about%20your%20courses."
+              href="https://wa.me/918951412810?text=Hello%20Brilliant%20Hub,%20I%20would%20like%20to%20enquire%20about%20your%20courses."
               target="_blank"
               rel="noopener noreferrer"
             >
