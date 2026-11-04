@@ -57,10 +57,16 @@ export function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
   const [show, setShow] = useState(false)
   const [isInstalling, setIsInstalling] = useState(false)
+  const [isIosDevice, setIsIosDevice] = useState(false)
+  const [showIosSteps, setShowIosSteps] = useState(false)
   const [isStandalone] = useState(() => isAppInstalledOrStandalone())
 
   useEffect(() => {
     if (isStandalone) return
+
+    const ua = typeof window !== 'undefined' ? window.navigator.userAgent.toLowerCase() : ''
+    const isIos = /iphone|ipad|ipod/.test(ua) && !window.MSStream
+    setIsIosDevice(isIos)
 
     if (typeof window !== 'undefined' && window.deferredInstallPrompt) {
       setDeferredPrompt(window.deferredInstallPrompt)
@@ -158,9 +164,17 @@ export function InstallPrompt() {
   }
 
   const handleDownloadApp = async () => {
+    // 1. If on iOS (iPhone/iPad), Apple prohibits automatic silent home screen install.
+    // NEVER call navigator.share (which opens generic Share/AirDrop/WhatsApp sheet).
+    // Instead, show the direct 2-step Safari "Add to Home Screen" visual guide.
+    if (isIosDevice) {
+      setShowIosSteps(true)
+      return
+    }
+
     setIsInstalling(true)
 
-    // Wait slightly if prompt event is arriving
+    // 2. Android Chrome / PWA native direct prompt
     let promptEvent =
       deferredPrompt || (typeof window !== 'undefined' ? window.deferredInstallPrompt : null)
 
@@ -173,7 +187,6 @@ export function InstallPrompt() {
       }
     }
 
-    // 1. Android Chrome / PWA native direct prompt
     if (promptEvent) {
       try {
         await promptEvent.prompt()
@@ -202,31 +215,7 @@ export function InstallPrompt() {
       return
     }
 
-    // 2. iOS Safari direct share sheet trigger
-    const ua = typeof window !== 'undefined' ? window.navigator.userAgent.toLowerCase() : ''
-    const isIos = /iphone|ipad|ipod/.test(ua) && !window.MSStream
-
-    if (isIos && typeof navigator !== 'undefined' && navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Brilliant Hub',
-          text: 'Brilliant Hub - Tuition, Music, Drawing & Abacus',
-          url: (typeof window !== 'undefined' ? window.location.origin : '') + '/?source=pwa',
-        })
-        try {
-          localStorage.setItem(INSTALLED_KEY, 'true')
-        } catch {
-          // ignore
-        }
-      } catch {
-        // user dismissed share sheet
-      }
-      setShow(false)
-      setIsInstalling(false)
-      return
-    }
-
-    // 3. Fallback on any mobile or desktop: directly download launcher shortcut file with 1 click
+    // 3. Fallback: directly download launcher shortcut file with 1 click
     downloadAppShortcut()
     try {
       localStorage.setItem(INSTALLED_KEY, 'true')
@@ -275,49 +264,87 @@ export function InstallPrompt() {
         </div>
 
         {/* Content */}
-        <div className="mt-4 flex flex-col gap-2.5">
-          <p className="font-['Plus_Jakarta_Sans'] text-[15px] font-bold text-white leading-snug">
-            Download Brilliant Hub as an App
-          </p>
-          <p className="font-['Plus_Jakarta_Sans'] text-[12px] leading-[18px] text-gray-300">
-            Tap below to download directly to your mobile home screen for 1-tap fast access without typing website addresses.
-          </p>
+        {showIosSteps ? (
+          <div className="mt-4 flex flex-col gap-3 animate-fade-in">
+            <div className="rounded-2xl bg-amber-400/10 border border-[#fdc254] p-3.5 text-left">
+              <p className="font-['Plus_Jakarta_Sans'] text-[14px] font-bold text-[#fdc254] flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[18px]">phone_iphone</span>
+                iPhone Home Screen Install
+              </p>
+              <p className="font-['Plus_Jakarta_Sans'] text-[12px] text-gray-300 mt-1">
+                Apple requires installing directly through Safari without using third-party apps:
+              </p>
 
-          {/* New Updates Coming Soon Notice */}
-          <div className="mt-1 p-3 rounded-2xl bg-white/5 border border-[#fdc254]/40 flex flex-col gap-1 text-left">
-            <div className="flex items-center gap-1.5 text-[#fdc254] font-['Plus_Jakarta_Sans'] text-[11px] font-black uppercase tracking-wider">
-              <span className="material-symbols-outlined text-[15px]">upcoming</span>
-              <span>New Updates Coming Soon</span>
+              <div className="mt-3 flex flex-col gap-2.5">
+                <div className="flex items-center gap-2.5 bg-black/30 p-2.5 rounded-xl border border-white/10">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-[#fdc254] text-[#011e38] font-bold text-xs flex items-center justify-center">1</span>
+                  <p className="font-['Plus_Jakarta_Sans'] text-[12px] text-white">
+                    Tap the <strong>Share</strong> button <span className="inline-block px-1.5 py-0.5 rounded bg-white/20 text-white font-mono text-[11px]">⎋</span> in Safari&apos;s bottom toolbar.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2.5 bg-black/30 p-2.5 rounded-xl border border-white/10">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-[#fdc254] text-[#011e38] font-bold text-xs flex items-center justify-center">2</span>
+                  <p className="font-['Plus_Jakarta_Sans'] text-[12px] text-white">
+                    Scroll down and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong> <span className="inline-block px-1.5 py-0.5 rounded bg-white/20 text-white font-mono text-[11px]">⊞</span>.
+                  </p>
+                </div>
+              </div>
             </div>
-            <p className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[16px] text-gray-200">
-              Student &amp; Parent Portal: <strong>Student Login</strong>, <strong>Daily Attendance</strong>, and <strong>Weekly Test Marks &amp; Progress Reports</strong>!
-            </p>
+
+            <button
+              type="button"
+              onClick={continueInDesktopMode}
+              className="mt-1 w-full rounded-xl bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] font-black uppercase tracking-wider text-[#4a2e00] transition-all shadow-lg"
+            >
+              Got It, Open in Safari
+            </button>
           </div>
-        </div>
+        ) : (
+          <div className="mt-4 flex flex-col gap-2.5">
+            <p className="font-['Plus_Jakarta_Sans'] text-[15px] font-bold text-white leading-snug">
+              Download Brilliant Hub as an App
+            </p>
+            <p className="font-['Plus_Jakarta_Sans'] text-[12px] leading-[18px] text-gray-300">
+              Tap below to install directly to your home screen for instant 1-tap fast access.
+            </p>
 
-        {/* 1-Tap Action Buttons */}
-        <div className="mt-5 flex flex-col sm:flex-row gap-2.5">
-          <button
-            type="button"
-            disabled={isInstalling}
-            onClick={handleDownloadApp}
-            className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] font-black uppercase tracking-wider text-[#4a2e00] transition-all shadow-lg active:scale-[0.99] disabled:opacity-75"
-          >
-            <span className="material-symbols-outlined text-[20px]">
-              {isInstalling ? 'progress_activity' : 'install_mobile'}
-            </span>
-            <span>{isInstalling ? 'Installing...' : 'Download as App'}</span>
-          </button>
+            {/* New Updates Coming Soon Notice */}
+            <div className="mt-1 p-3 rounded-2xl bg-white/5 border border-[#fdc254]/40 flex flex-col gap-1 text-left">
+              <div className="flex items-center gap-1.5 text-[#fdc254] font-['Plus_Jakarta_Sans'] text-[11px] font-black uppercase tracking-wider">
+                <span className="material-symbols-outlined text-[15px]">upcoming</span>
+                <span>New Updates Coming Soon</span>
+              </div>
+              <p className="font-['Plus_Jakarta_Sans'] text-[11px] leading-[16px] text-gray-200">
+                Student &amp; Parent Portal: <strong>Student Login</strong>, <strong>Daily Attendance</strong>, and <strong>Weekly Test Marks &amp; Progress Reports</strong>!
+              </p>
+            </div>
 
-          <button
-            type="button"
-            onClick={continueInDesktopMode}
-            className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-white/20 bg-white/10 hover:bg-white/20 px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] font-bold text-gray-200 transition-colors"
-          >
-            <span className="material-symbols-outlined text-[18px]">desktop_windows</span>
-            <span>Continue in Desktop</span>
-          </button>
-        </div>
+            {/* 1-Tap Action Buttons */}
+            <div className="mt-4 flex flex-col sm:flex-row gap-2.5">
+              <button
+                type="button"
+                disabled={isInstalling}
+                onClick={handleDownloadApp}
+                className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] font-black uppercase tracking-wider text-[#4a2e00] transition-all shadow-lg active:scale-[0.99] disabled:opacity-75"
+              >
+                <span className="material-symbols-outlined text-[20px]">
+                  {isInstalling ? 'progress_activity' : 'install_mobile'}
+                </span>
+                <span>{isInstalling ? 'Installing...' : 'Download as App'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={continueInDesktopMode}
+                className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-white/20 bg-white/10 hover:bg-white/20 px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] font-bold text-gray-200 transition-colors"
+              >
+                <span className="material-symbols-outlined text-[18px]">desktop_windows</span>
+                <span>Continue in Desktop</span>
+              </button>
+            </div>
+          </div>
+        )}
 
       </div>
     </div>
