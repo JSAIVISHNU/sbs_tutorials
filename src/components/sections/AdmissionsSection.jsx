@@ -249,7 +249,7 @@ export function AdmissionsSection() {
                     <span className="font-body-sm text-body-sm text-on-surface-variant">
                       Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru, Karnataka – 560061
                     </span>
-                    <a className="mt-2 inline-flex items-center gap-1 text-primary hover:text-navy-deep font-label-sm text-label-sm font-bold" href="https://maps.google.com/?q=Uttarahalli+Main+Road+Bengaluru" rel="noopener noreferrer" target="_blank">
+                    <a className="mt-2 inline-flex items-center gap-1 text-primary hover:text-navy-deep font-label-sm text-label-sm font-bold" href="https://maps.app.goo.gl/svBrjDf1WZVzcpaU9?g_st=iw" rel="noopener noreferrer" target="_blank">
                       <span>Open in Google Maps</span>
                       <span className="material-symbols-outlined text-[14px]">open_in_new</span>
                     </a>

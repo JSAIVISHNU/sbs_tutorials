@@ -168,16 +168,16 @@ export function HeroSection() {
             VISIT BRILLIANT HUB, Near Vishal Mega Mart, Uttarahalli Main Road, Bengaluru.
           </p>
 
-          {/* Scan / Click for Location Button */}
+          {/* Location Button */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-2">
             <a
-              href="https://maps.google.com/?q=Vishal+Mega+Mart+Uttarahalli+Bengaluru"
+              href="https://maps.app.goo.gl/svBrjDf1WZVzcpaU9?g_st=iw"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] text-[#4a2e00] font-['Plus_Jakarta_Sans'] text-[12px] sm:text-[14px] font-black uppercase tracking-wider shadow-md active:scale-[0.99] transition-all"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] text-[#4a2e00] font-['Plus_Jakarta_Sans'] text-[12px] sm:text-[14px] font-black uppercase tracking-wider shadow-md active:scale-[0.99] transition-all"
             >
-              <span className="material-symbols-outlined text-[20px]">qr_code_scanner</span>
-              <span>SCAN FOR LOCATION / OPEN MAPS</span>
+              <span className="material-symbols-outlined text-[20px]">location_on</span>
+              <span>OPEN IN GOOGLE MAPS</span>
             </a>
           </div>
 

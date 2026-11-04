@@ -64,7 +64,7 @@ export function ContactSection() {
               <div className="pt-2 border-t border-white/10">
                 <a
                   className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-[#fdc254] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#fdc254] text-[#4a2e00] font-['Plus_Jakarta_Sans'] text-[12px] sm:text-[13px] font-black uppercase tracking-wider transition-all shadow-md active:scale-[0.99]"
-                  href="https://maps.google.com/?q=Vishal+Mega+Mart+Uttarahalli+Bengaluru"
+                  href="https://maps.app.goo.gl/svBrjDf1WZVzcpaU9?g_st=iw"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

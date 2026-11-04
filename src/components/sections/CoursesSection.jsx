@@ -153,7 +153,7 @@ export function CoursesSection() {
               <span>WhatsApp (89514 12810)</span>
             </a>
             <a
-              href="https://maps.google.com/?q=Vishal+Mega+Mart+Uttarahalli+Bengaluru"
+              href="https://maps.app.goo.gl/svBrjDf1WZVzcpaU9?g_st=iw"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#fdc254] hover:bg-[#f59e0b] text-[#5c3e00] font-['Plus_Jakarta_Sans'] text-[14px] font-bold transition-all shadow-md"
