@@ -63,7 +63,14 @@ export default defineConfig(({ mode }) => {
       apiDevPlugin(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.svg', 'favicon.png', 'images/logo.png'],
+        includeAssets: [
+          'favicon.svg',
+          'favicon.png',
+          'images/logo.png',
+          'pwa-192x192.png',
+          'pwa-512x512.png',
+          'apple-touch-icon.png',
+        ],
         manifest: {
           name: 'Brilliant Hub',
           short_name: 'Brilliant Hub',
@@ -71,11 +78,28 @@ export default defineConfig(({ mode }) => {
           theme_color: '#03345d',
           background_color: '#f8f9ff',
           display: 'standalone',
-          start_url: '/',
+          orientation: 'portrait',
+          start_url: '/?source=pwa',
           scope: '/',
           icons: [
-            { src: '/favicon.png', sizes: '192x192', type: 'image/png' },
-            { src: '/favicon.png', sizes: '512x512', type: 'image/png' },
+            {
+              src: '/pwa-192x192.png',
+              sizes: '192x192',
+              type: 'image/png',
+              purpose: 'any',
+            },
+            {
+              src: '/pwa-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'any',
+            },
+            {
+              src: '/pwa-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'maskable',
+            },
           ],
         },
         workbox: {

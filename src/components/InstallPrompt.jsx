@@ -2,19 +2,74 @@
 import { useEffect, useState } from 'react'
 
 const SESSION_KEY = 'bh-desktop-mode-chosen'
+const INSTALLED_KEY = 'bh-app-installed'
+
+function isAppInstalledOrStandalone() {
+  if (typeof window === 'undefined') return false
+
+  // 1. Android/Chrome/Desktop standalone PWA display mode
+  if (
+    window.matchMedia &&
+    (window.matchMedia('(display-mode: standalone)').matches ||
+      window.matchMedia('(display-mode: fullscreen)').matches)
+  ) {
+    return true
+  }
+
+  // 2. iOS Safari standalone mode (when launched from Home Screen)
+  if (window.navigator && window.navigator.standalone === true) {
+    return true
+  }
+
+  // 3. Launched via home screen start_url (?source=pwa)
+  if (window.location && window.location.search && window.location.search.indexOf('source=pwa') !== -1) {
+    try {
+      localStorage.setItem(INSTALLED_KEY, 'true')
+    } catch {
+      // ignore
+    }
+    return true
+  }
+
+  // 4. Android WebAPK launch referrer
+  if (typeof document !== 'undefined' && document.referrer && document.referrer.indexOf('android-app://') !== -1) {
+    try {
+      localStorage.setItem(INSTALLED_KEY, 'true')
+    } catch {
+      // ignore
+    }
+    return true
+  }
+
+  // 5. Marked as installed in localStorage
+  try {
+    if (localStorage.getItem(INSTALLED_KEY) === 'true') {
+      return true
+    }
+  } catch {
+    // ignore
+  }
+
+  return false
+}
 
 export function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
   const [show, setShow] = useState(false)
-  const [isStandalone, setIsStandalone] = useState(false)
+  const [isIos, setIsIos] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [showIosGuide, setShowIosGuide] = useState(false)
+  const [showAndroidGuide, setShowAndroidGuide] = useState(false)
+  const [isStandalone] = useState(() => isAppInstalledOrStandalone())
 
   useEffect(() => {
-    const standalone =
-      typeof window !== 'undefined' &&
-      (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true)
+    if (isStandalone) return
 
-    setIsStandalone(standalone)
-    if (standalone) return
+    const ua = typeof window !== 'undefined' ? window.navigator.userAgent.toLowerCase() : ''
+    const ios = /iphone|ipad|ipod/.test(ua) && !window.MSStream
+    const mobile = /android|iphone|ipad|ipod|mobile/.test(ua)
+    setIsIos(ios)
+    setIsMobile(mobile)
 
     if (typeof window !== 'undefined' && window.deferredInstallPrompt) {
       setDeferredPrompt(window.deferredInstallPrompt)
@@ -29,8 +84,24 @@ export function InstallPrompt() {
     }
     window.addEventListener('beforeinstallprompt', handler)
 
+    const installedHandler = () => {
+      try {
+        localStorage.setItem(INSTALLED_KEY, 'true')
+      } catch {
+        // ignore
+      }
+      setShow(false)
+      if (typeof window !== 'undefined') {
+        window.deferredInstallPrompt = null
+      }
+      setDeferredPrompt(null)
+    }
+    window.addEventListener('appinstalled', installedHandler)
+
     const openListener = () => {
       setShow(true)
+      setShowIosGuide(false)
+      setShowAndroidGuide(false)
     }
     window.addEventListener('open-install-prompt', openListener)
 
@@ -39,27 +110,43 @@ export function InstallPrompt() {
     if (!chosen) {
       const timer = setTimeout(() => {
         setShow(true)
-      }, 800)
+      }, 700)
       return () => {
         clearTimeout(timer)
         window.removeEventListener('beforeinstallprompt', handler)
+        window.removeEventListener('appinstalled', installedHandler)
         window.removeEventListener('open-install-prompt', openListener)
       }
     }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handler)
+      window.removeEventListener('appinstalled', installedHandler)
       window.removeEventListener('open-install-prompt', openListener)
     }
-  }, [])
+  }, [isStandalone])
 
   const continueInDesktopMode = () => {
     setShow(false)
+    setShowIosGuide(false)
+    setShowAndroidGuide(false)
     try {
       sessionStorage.setItem(SESSION_KEY, '1')
     } catch {
       // ignore storage errors
     }
+  }
+
+  const markInstalledAndClose = () => {
+    try {
+      localStorage.setItem(INSTALLED_KEY, 'true')
+      sessionStorage.setItem(SESSION_KEY, '1')
+    } catch {
+      // ignore
+    }
+    setShow(false)
+    setShowIosGuide(false)
+    setShowAndroidGuide(false)
   }
 
   const downloadAppShortcut = () => {
@@ -71,15 +158,15 @@ export function InstallPrompt() {
   <title>Brilliant Hub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="${origin}/images/logo.png">
-  <meta http-equiv="refresh" content="0; url=${origin}/">
-  <script>window.location.replace("${origin}/");</script>
+  <meta http-equiv="refresh" content="0; url=${origin}/?source=pwa">
+  <script>window.location.replace("${origin}/?source=pwa");</script>
 </head>
 <body style="font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#f8f9ff;color:#03345d;">
   <div style="text-align:center;padding:24px;">
     <img src="${origin}/images/logo.png" width="96" height="96" alt="Brilliant Hub" style="object-fit:contain;margin-bottom:16px;">
     <h2 style="margin:0 0 8px 0;font-size:24px;">Launching Brilliant Hub...</h2>
     <p style="margin:0;font-size:14px;color:#43474e;">Uttarahalli • Bengaluru</p>
-    <p style="margin-top:20px;"><a href="${origin}/" style="color:#03345d;font-weight:600;text-decoration:underline;">Click here if not redirected automatically</a></p>
+    <p style="margin-top:20px;"><a href="${origin}/?source=pwa" style="color:#03345d;font-weight:600;text-decoration:underline;">Click here if not redirected automatically</a></p>
   </div>
 </body>
 </html>`
@@ -96,13 +183,26 @@ export function InstallPrompt() {
   }
 
   const handleDownloadApp = async () => {
-    const promptEvent =
+    let promptEvent =
       deferredPrompt || (typeof window !== 'undefined' ? window.deferredInstallPrompt : null)
+
+    if (!promptEvent && !isIos) {
+      await new Promise((resolve) => setTimeout(resolve, 250))
+      promptEvent =
+        deferredPrompt || (typeof window !== 'undefined' ? window.deferredInstallPrompt : null)
+    }
 
     if (promptEvent) {
       try {
-        promptEvent.prompt()
-        await promptEvent.userChoice
+        await promptEvent.prompt()
+        const choice = await promptEvent.userChoice
+        if (choice?.outcome === 'accepted') {
+          try {
+            localStorage.setItem(INSTALLED_KEY, 'true')
+          } catch {
+            // ignore
+          }
+        }
       } catch {
         // ignore
       }
@@ -119,7 +219,17 @@ export function InstallPrompt() {
       return
     }
 
-    // Direct download shortcut on clicking for desktop / browsers without native prompt
+    if (isIos) {
+      setShowIosGuide(true)
+      return
+    }
+
+    if (isMobile) {
+      setShowAndroidGuide(true)
+      return
+    }
+
+    // On desktop browsers without native prompt, download the launcher shortcut
     downloadAppShortcut()
     setShow(false)
     try {
@@ -160,33 +270,104 @@ export function InstallPrompt() {
           </button>
         </div>
 
-        <div className="mt-3">
-          <p className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[22px] text-[#161c24]">
-            How would you like to experience Brilliant Hub today?
-          </p>
-          <p className="mt-1 font-['Plus_Jakarta_Sans'] text-[12px] leading-[18px] text-[#43474e]">
-            Download as an app on your home screen for fast 1-tap offline access, or continue browsing in desktop mode.
-          </p>
-        </div>
+        {!showIosGuide && !showAndroidGuide ? (
+          <>
+            <div className="mt-3">
+              <p className="font-['Plus_Jakarta_Sans'] text-[14px] leading-[22px] text-[#161c24]">
+                How would you like to experience Brilliant Hub today?
+              </p>
+              <p className="mt-1 font-['Plus_Jakarta_Sans'] text-[12px] leading-[18px] text-[#43474e]">
+                Download as an app on your home screen for fast 1-tap offline access, or continue browsing in desktop mode.
+              </p>
+            </div>
 
-        <div className="mt-5 flex flex-col sm:flex-row gap-2.5">
-          <button
-            type="button"
-            onClick={handleDownloadApp}
-            className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#03345d] hover:bg-[#244b75] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] leading-[18px] font-bold text-white transition-all shadow-md active:scale-[0.99]"
-          >
-            <span className="material-symbols-outlined text-[18px]">install_mobile</span>
-            <span>Download as App</span>
-          </button>
-          <button
-            type="button"
-            onClick={continueInDesktopMode}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#c3c6d0] bg-[#f8f9ff] hover:bg-[#eef4ff] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] leading-[18px] font-semibold text-[#03345d] transition-colors"
-          >
-            <span className="material-symbols-outlined text-[18px]">desktop_windows</span>
-            <span>Continue in Desktop Mode</span>
-          </button>
-        </div>
+            <div className="mt-5 flex flex-col sm:flex-row gap-2.5">
+              <button
+                type="button"
+                onClick={handleDownloadApp}
+                className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#03345d] hover:bg-[#244b75] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] leading-[18px] font-bold text-white transition-all shadow-md active:scale-[0.99]"
+              >
+                <span className="material-symbols-outlined text-[18px]">install_mobile</span>
+                <span>Download as App</span>
+              </button>
+              <button
+                type="button"
+                onClick={continueInDesktopMode}
+                className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#c3c6d0] bg-[#f8f9ff] hover:bg-[#eef4ff] px-4 py-3 font-['Plus_Jakarta_Sans'] text-[13px] leading-[18px] font-semibold text-[#03345d] transition-colors"
+              >
+                <span className="material-symbols-outlined text-[18px]">desktop_windows</span>
+                <span>Continue in Desktop Mode</span>
+              </button>
+            </div>
+          </>
+        ) : null}
+
+        {showIosGuide ? (
+          <div className="mt-4 rounded-xl bg-[#eef4ff] p-4 border border-[#c3c6d0]/40 text-[#03345d]">
+            <h4 className="font-semibold text-sm flex items-center gap-1.5 mb-2">
+              <span className="material-symbols-outlined text-[18px]">add_to_home_screen</span>
+              Add to iPhone / iPad Home Screen
+            </h4>
+            <ol className="text-xs space-y-2 leading-relaxed text-[#161c24] list-decimal list-inside">
+              <li>
+                Tap the <strong className="text-[#03345d]">Share button (⎋)</strong> at the bottom of Safari.
+              </li>
+              <li>
+                Scroll down and tap <strong className="text-[#03345d]">&apos;Add to Home Screen&apos; (+)</strong>.
+              </li>
+              <li>Tap <strong className="text-[#03345d]">Add</strong> at the top right.</li>
+            </ol>
+            <div className="mt-4 flex gap-2">
+              <button
+                type="button"
+                onClick={markInstalledAndClose}
+                className="flex-1 rounded-lg bg-[#03345d] text-white py-2 px-3 text-xs font-semibold hover:bg-[#244b75] transition-colors"
+              >
+                Done, I&apos;ve Added It
+              </button>
+              <button
+                type="button"
+                onClick={continueInDesktopMode}
+                className="rounded-lg bg-white border border-[#c3c6d0] text-[#43474e] py-2 px-3 text-xs font-semibold hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : null}
+
+        {showAndroidGuide ? (
+          <div className="mt-4 rounded-xl bg-[#eef4ff] p-4 border border-[#c3c6d0]/40 text-[#03345d]">
+            <h4 className="font-semibold text-sm flex items-center gap-1.5 mb-2">
+              <span className="material-symbols-outlined text-[18px]">add_to_home_screen</span>
+              Add to Android Home Screen
+            </h4>
+            <ol className="text-xs space-y-2 leading-relaxed text-[#161c24] list-decimal list-inside">
+              <li>
+                Tap your browser menu <strong className="text-[#03345d]">(⋮)</strong> at the top right.
+              </li>
+              <li>
+                Tap <strong className="text-[#03345d]">&apos;Install app&apos;</strong> or <strong className="text-[#03345d]">&apos;Add to Home screen&apos;</strong>.
+              </li>
+            </ol>
+            <div className="mt-4 flex gap-2">
+              <button
+                type="button"
+                onClick={markInstalledAndClose}
+                className="flex-1 rounded-lg bg-[#03345d] text-white py-2 px-3 text-xs font-semibold hover:bg-[#244b75] transition-colors"
+              >
+                Done, I&apos;ve Added It
+              </button>
+              <button
+                type="button"
+                onClick={continueInDesktopMode}
+                className="rounded-lg bg-white border border-[#c3c6d0] text-[#43474e] py-2 px-3 text-xs font-semibold hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   )
